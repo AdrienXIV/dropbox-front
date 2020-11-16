@@ -1,0 +1,45 @@
+{
+  "env": {
+    "es6": true,
+    "node": true
+  },
+  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "prettier"],
+  "rules": {
+    "prettier/prettier": "error",
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "import/prefer-default-export": "off",
+    "no-underscore-dangle": "off",
+    "global-require": "off",
+    "react/prop-types": "off",
+    "no-unused-vars": "warn",
+    "no-use-before-define": "off",
+    "camelcase": "off",
+    "no-plusplus": "off",
+    "react/jsx-indent": "off",
+    "no-param-reassign": "off",
+    "import/no-unresolved": "warn",
+    "no-nested-ternary": "off",
+    "no-unused-expressions": "off",
+    "react/no-unescaped-entities": "off",
+    "consistent-return": "off",
+    "react/jsx-one-expression-per-line": "off",
+    "no-undef": "off",
+    "react/jsx-closing-bracket-location": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "import/no-dynamic-require": "off",
+    "no-alert": "off",
+    "no-restricted-globals": "off"
+  }
+}
