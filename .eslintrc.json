@@ -40,6 +40,7 @@
     "jsx-a11y/anchor-is-valid": "off",
     "import/no-dynamic-require": "off",
     "no-alert": "off",
-    "no-restricted-globals": "off"
+    "no-restricted-globals": "off",
+    "react/react-in-jsx-scope": "off"
   }
 }
