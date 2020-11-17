@@ -1,46 +1,52 @@
 {
+  "root": true,
+  "extends": [
+    "eslint:recommended",
+    "plugin:prettier/recommended",
+    "plugin:react/recommended", // Uses the recommended rules from @eslint-plugin-react
+    "plugin:@typescript-eslint/eslint-recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "plugin:@typescript-eslint/recommended", // Uses the recommended rules from the @typescript-eslint/eslint-plugin
+    "prettier/@typescript-eslint" // Uses eslint-config-prettier to disable ESLint rules from @typescript-eslint/eslint-plugin that would conflict with prettier
+  ],
+  "parser": "@typescript-eslint/parser", // Specifies the ESLint parser
   "env": {
+    "browser": true,
     "es6": true,
-    "node": true
-  },
-  "extends": ["plugin:react/recommended", "airbnb", "prettier"],
-  "globals": {
-    "Atomics": "readonly",
-    "SharedArrayBuffer": "readonly"
+    "jest": true
   },
   "parserOptions": {
+    "ecmaVersion": 2020, // Allows for the parsing of modern ECMAScript features
+    "sourceType": "module", // Allows for the use of imports
     "ecmaFeatures": {
-      "jsx": true
-    },
-    "ecmaVersion": 2018,
-    "sourceType": "module"
+      "jsx": true, // Allows for the parsing of JSX
+      "arrowFunctions": true
+    }
   },
-  "plugins": ["react", "prettier"],
+  "plugins": ["react", "@typescript-eslint", "prettier"],
+  "settings": {
+    "react": {
+      "version": "detect" // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"],
+        "paths": ["./src"]
+      }
+    }
+  },
   "rules": {
-    "prettier/prettier": "error",
-    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    // Existing rules
+    "comma-dangle": "off", // https://eslint.org/docs/rules/comma-dangle
+    "function-paren-newline": "off", // https://eslint.org/docs/rules/function-paren-newline
+    "global-require": "off", // https://eslint.org/docs/rules/global-require
+    "import/no-dynamic-require": "off", // https://github.com/benmosher/eslint-plugin-import/blob/master/docs/rules/no-dynamic-require.md
+    "no-inner-declarations": "off", // https://eslint.org/docs/rules/no-inner-declarations
+    // New rules
+    "class-methods-use-this": "off",
+    "import/extensions": "off",
     "import/prefer-default-export": "off",
-    "no-underscore-dangle": "off",
-    "global-require": "off",
-    "react/prop-types": "off",
-    "no-unused-vars": "warn",
-    "no-use-before-define": "off",
-    "camelcase": "off",
-    "no-plusplus": "off",
-    "react/jsx-indent": "off",
-    "no-param-reassign": "off",
-    "import/no-unresolved": "warn",
-    "no-nested-ternary": "off",
-    "no-unused-expressions": "off",
-    "react/no-unescaped-entities": "off",
-    "consistent-return": "off",
-    "react/jsx-one-expression-per-line": "off",
-    "no-undef": "off",
-    "react/jsx-closing-bracket-location": "off",
-    "jsx-a11y/anchor-is-valid": "off",
-    "import/no-dynamic-require": "off",
-    "no-alert": "off",
-    "no-restricted-globals": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/no-var-requires": "off",
     "react/react-in-jsx-scope": "off"
   }
 }
