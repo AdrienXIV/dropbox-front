@@ -13,7 +13,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>> {
     return (
       <Container maxWidth='lg' className={classes.container}>
         <Card className={classes.root}>
-          <CardContent className={classes.blockLeft} style={{ textAlign: 'center' }}>
+          <CardContent className={classes.blockLeft}>
             <Typography component='h5' variant='h5'>
               Connexion
             </Typography>
@@ -39,12 +39,14 @@ export default class Home extends React.Component<P & WithStyles<Styles>> {
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>
-                <Button variant='contained'>Se connecter</Button>
+                <Button type='submit' variant='contained'>
+                  Se connecter
+                </Button>
               </div>
             </form>
           </CardContent>
 
-          <CardContent className={classes.blockRight} style={{ backgroundColor: '#2c3e50', color: 'white', textAlign: 'center' }}>
+          <CardContent className={classes.blockRight}>
             <Typography component='h5' variant='h5'>
               Dropbox | IMIE-Paris
             </Typography>
