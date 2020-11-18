@@ -1,5 +1,5 @@
 import { createStyles, Theme } from '@material-ui/core';
-export type Styles = 'root' | 'paper'; // add class create
+export type Styles = 'root' | 'paper' | 'button'; // add class create
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -10,6 +10,9 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+    },
+    button: {
+      margin: theme.spacing(1),
     },
   });
 
