@@ -1,5 +1,5 @@
 import { createStyles, Theme } from '@material-ui/core';
-export type Styles = 'root' | 'margin' | 'blockLeft' | 'blockRight' | 'details' | 'cover' | 'controls' | 'form' | 'buttonSignin'; // add class create
+export type Styles = 'root' | 'margin' | 'blockLeft' | 'blockRight' | 'details' | 'form' | 'buttonSignup' | 'buttonSignin'; // add class create
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -20,11 +20,21 @@ const styles = (theme: Theme) =>
       marginTop: '10%',
       textAlign: 'center',
     },
+    buttonSignup: {
+      color: '#2c3e50',
+      marginTop: '10%',
+      textAlign: 'center',
+      width: '50%',
+      alignSelf: 'center',
+    },
     details: {
       display: 'flex',
       width: '100%',
     },
     blockRight: {
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
       width: '50%',
       backgroundColor: '#2c3e50',
       color: 'white',
@@ -32,12 +42,6 @@ const styles = (theme: Theme) =>
     blockLeft: {
       textAlign: 'center',
       width: '50%',
-    },
-    controls: {
-      display: 'flex',
-      alignItems: 'center',
-      paddingLeft: theme.spacing(1),
-      paddingBottom: theme.spacing(1),
     },
   });
 

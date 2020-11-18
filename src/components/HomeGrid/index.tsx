@@ -48,7 +48,9 @@ export default class HomeGrid extends React.Component<P & WithStyles<Styles>> {
               Dropbox | IMIE-Paris
             </Typography>
             <Typography variant='subtitle1'>Groupe 6</Typography>
-            <Button style={{ marginTop: '5%', color: 'white' }}>S&apos;inscrire</Button>
+            <Button variant='contained' className={classes.buttonSignup}>
+              S&apos;inscrire
+            </Button>
           </CardContent>
         </div>
       </Card>
