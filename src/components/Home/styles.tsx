@@ -1,8 +1,14 @@
 import { createStyles, Theme } from '@material-ui/core';
-export type Styles = 'root' | 'margin' | 'blockLeft' | 'blockRight' | 'details' | 'form' | 'buttonSignup' | 'buttonSignin'; // add class create
+export type Styles = 'root' | 'container' | 'margin' | 'blockLeft' | 'blockRight' | 'form' | 'buttonSignup' | 'buttonSignin'; // add class create
 
 const styles = (theme: Theme) =>
   createStyles({
+    container: {
+      height: '100vh',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+    },
     root: {
       display: 'flex',
       width: '75%',
@@ -26,10 +32,6 @@ const styles = (theme: Theme) =>
       textAlign: 'center',
       width: '50%',
       alignSelf: 'center',
-    },
-    details: {
-      display: 'flex',
-      width: '100%',
     },
     blockRight: {
       display: 'flex',

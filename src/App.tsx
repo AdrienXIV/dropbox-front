@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/Register';
-import Home from './pages/Home';
+import Home from './components/Home';
 
 import history from './history';
 
@@ -16,7 +16,7 @@ function App(): JSX.Element {
     <div className='App'>
       <Router history={history}>
         <Switch>
-          <Route exact path='/' component={Home} />
+          <Route exact path='/' component={Home.Display} />
           <Route exact path='/inscription' component={Register} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/profil' component={Register} />

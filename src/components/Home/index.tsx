@@ -1,17 +1,18 @@
 import React from 'react';
-import { Button, Grid, TextField, Card, CardContent, Typography, withStyles, WithStyles } from '@material-ui/core';
+import { Button, Container, Grid, TextField, Card, CardContent, Typography, withStyles, WithStyles } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
 interface P {}
 
-export default class HomeGrid extends React.Component<P & WithStyles<Styles>> {
-  public static Display = withStyles(styles as any)(HomeGrid) as React.ComponentType<P>;
+export default class Home extends React.Component<P & WithStyles<Styles>> {
+  public static Display = withStyles(styles as any)(Home) as React.ComponentType<P>;
+
   render() {
     const { classes } = this.props;
     return (
-      <Card className={classes.root}>
-        <div className={classes.details}>
+      <Container maxWidth='lg' className={classes.container}>
+        <Card className={classes.root}>
           <CardContent className={classes.blockLeft} style={{ textAlign: 'center' }}>
             <Typography component='h5' variant='h5'>
               Connexion
@@ -52,8 +53,8 @@ export default class HomeGrid extends React.Component<P & WithStyles<Styles>> {
               S&apos;inscrire
             </Button>
           </CardContent>
-        </div>
-      </Card>
+        </Card>
+      </Container>
     );
   }
 }
