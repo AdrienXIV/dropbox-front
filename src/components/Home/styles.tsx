@@ -35,6 +35,7 @@ const styles = (theme: Theme) =>
     },
     blockRight: {
       display: 'flex',
+      flex: '1',
       flexDirection: 'column',
       justifyContent: 'center',
       width: '50%',
@@ -42,8 +43,7 @@ const styles = (theme: Theme) =>
       color: 'white',
     },
     blockLeft: {
-      textAlign: 'center',
-      width: '50%',
+      flex: '1',
     },
   });
 

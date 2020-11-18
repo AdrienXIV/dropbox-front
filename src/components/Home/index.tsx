@@ -14,7 +14,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>> {
       <Container maxWidth='lg' className={classes.container}>
         <Card className={classes.root}>
           <CardContent className={classes.blockLeft}>
-            <Typography component='h5' variant='h5'>
+            <Typography component='h5' variant='h5' align='center'>
               Connexion
             </Typography>
             <form className={classes.form} noValidate autoComplete='off'>
@@ -47,10 +47,12 @@ export default class Home extends React.Component<P & WithStyles<Styles>> {
           </CardContent>
 
           <CardContent className={classes.blockRight}>
-            <Typography component='h5' variant='h5'>
+            <Typography component='h5' variant='h5' align='center'>
               Dropbox | IMIE-Paris
             </Typography>
-            <Typography variant='subtitle1'>Groupe 6</Typography>
+            <Typography variant='subtitle1' align='center'>
+              Groupe 6
+            </Typography>
             <Button variant='contained' className={classes.buttonSignup}>
               S&apos;inscrire
             </Button>
