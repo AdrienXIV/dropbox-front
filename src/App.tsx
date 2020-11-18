@@ -1,6 +1,5 @@
 import React from 'react';
 import './App.css';
-import 'semantic-ui-css/semantic.min.css';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/Register';
 import Home from './pages/Home';
