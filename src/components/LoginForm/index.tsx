@@ -1,10 +1,6 @@
 import React from 'react';
-import { withStyles, WithStyles } from '@material-ui/core';
+import { Button, withStyles, WithStyles } from '@material-ui/core';
 import styles, { Styles } from './styles';
-import Input from '@material-ui/core/Input';
-import InputLabel from '@material-ui/core/InputLabel';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import FormControl from '@material-ui/core/FormControl';
 import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 
@@ -23,7 +19,7 @@ export default class LoginForm extends React.Component<P & WithStyles<Styles>> {
               <AlternateEmailIcon />
             </Grid>
             <Grid item>
-              <TextField id='input-with-icon-grid' label='Courriel' type='email' />
+              <TextField label='Courriel' type='email' />
             </Grid>
           </Grid>
         </div>
@@ -33,10 +29,11 @@ export default class LoginForm extends React.Component<P & WithStyles<Styles>> {
               <VpnKeyIcon />
             </Grid>
             <Grid item>
-              <TextField id='input-with-icon-grid' label='Mot de passe' type='password' />
+              <TextField label='Mot de passe' type='password' />
             </Grid>
           </Grid>
         </div>
+        <Button variant='contained'>Se connecter</Button>
       </form>
     );
   }
