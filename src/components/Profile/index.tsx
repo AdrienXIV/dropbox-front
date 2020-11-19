@@ -19,7 +19,14 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     };
   }
   onDrop(files: File[]) {
-    this.setState({ files });
+    const newFiles = this.state.files;
+    files.forEach(file => {
+      // si le fichier exise déjà, on ne l'ajoute pas
+      const index = this.state.files.findIndex(f => f.name == file.name);
+      if (index !== -1) newFiles.splice(index, 1);
+      newFiles.push(file);
+    });
+    this.setState({ files: newFiles });
   }
 
   handleDelete(index: number) {
@@ -55,9 +62,8 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 <p>Drag n drop some files here, or click to select files</p>
               </div>
               <aside>
-                <h4>Files</h4>
-
-                {files}
+                <h4>Fichiers</h4>
+                <div className={classes.root}>{files}</div>
               </aside>
             </section>
           )}

@@ -19,7 +19,7 @@ function App(): JSX.Element {
         <Switch>
           <Route exact path='/' component={Home.Display} />
           <Route exact path='/inscription' component={Register} />
-          <Route exact path='/profil' component={Profile} />
+          <Route exact path='/profil' component={Profile.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
         </Switch>
       </Router>
