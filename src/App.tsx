@@ -5,6 +5,7 @@ import Register from './pages/Register';
 import Home from './components/Home';
 
 import history from './history';
+import Profile from './components/Profile';
 
 const isConnected = false;
 
@@ -18,8 +19,8 @@ function App(): JSX.Element {
         <Switch>
           <Route exact path='/' component={Home.Display} />
           <Route exact path='/inscription' component={Register} />
+          <Route exact path='/profil' component={Profile} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
-          <ProtectedRoute exact path='/profil' component={Register} />
         </Switch>
       </Router>
     </div>
