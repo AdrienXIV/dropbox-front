@@ -5,22 +5,29 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
+import Button from '@material-ui/core/Button'
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
+import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import { Grid, withStyles, WithStyles } from '@material-ui/core';
 import styles, { Styles } from './styles';
+import history from "../../history"
+
 interface P { }
 // interface S {}
 
 export class HeaderBar extends React.Component<P & WithStyles<Styles>>{
 
     public static Display = withStyles(styles as any)(HeaderBar) as React.ComponentType<P>
+    disconnect = () => {
+        localStorage.removeItem('token');
+        history.push('/')
+        
+      };
 
     render() {
         const menuId = 'primary-search-account-menu';
@@ -62,6 +69,9 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>>{
                 <IconButton aria-label="show more" aria-haspopup="true" color="inherit">
                 <MoreIcon />
                 </IconButton>
+            </div>
+            <div>
+            <Button onClick={this.disconnect}>Se déconnecter</Button>
             </div>
             </Toolbar>
         </AppBar>

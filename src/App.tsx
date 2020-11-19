@@ -21,7 +21,7 @@ function App(): JSX.Element {
           <Route exact path='/' component={Home.Display} />
           <Route exact path='/inscription' component={Register.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
-          <ProtectedRoute exact path='/profil' component={Register} />
+          <Route exact path='/profil' component={Register} />
         </Switch>
       </Router>
     </div>
