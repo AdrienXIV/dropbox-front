@@ -1,5 +1,5 @@
 import React from 'react';
-import { Chip, withStyles, WithStyles } from '@material-ui/core';
+import { Chip, Grid, Paper, withStyles, WithStyles } from '@material-ui/core';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
 import { sendFiles } from '../../utils/api';
@@ -7,17 +7,12 @@ import { sendFiles } from '../../utils/api';
 interface P {}
 interface S {
   files: File[];
-  message?: string;
+  message: string;
 }
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
+  public state: Readonly<S> = { files: [], message: '' };
 
-  constructor(props: any) {
-    super(props);
-    this.state = {
-      files: [],
-    };
-  }
   onDrop(files: File[]) {
     const newFiles = this.state.files;
     files.forEach(file => {
@@ -53,22 +48,31 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
       <Chip key={index.toString()} label={file.name} onDelete={() => this.handleDelete(index)} variant='outlined' />
     ));
     return (
-      <div>
-        <Dropzone onDrop={f => this.onDrop(f)}>
-          {({ getRootProps, getInputProps }) => (
-            <section className='container'>
-              <div {...getRootProps({ className: 'dropzone' })}>
-                <input {...getInputProps()} />
-                <p>Drag n drop some files here, or click to select files</p>
-              </div>
-              <aside>
-                <h4>Fichiers</h4>
-                <div className={classes.root}>{files}</div>
-              </aside>
-            </section>
-          )}
-        </Dropzone>
-        <button onClick={e => this.handleSubmit(e)}>Envoyer</button>
+      <div className={classes.root}>
+        <Grid container spacing={3}>
+          <Grid item xs={4}>
+            <Paper className={classes.paper}>
+              <Dropzone onDrop={f => this.onDrop(f)}>
+                {({ getRootProps, getInputProps }) => (
+                  <section>
+                    <div {...getRootProps({ className: 'dropzone' })} className={classes.base}>
+                      <input {...getInputProps()} />
+                      <p>Drag n drop some files here, or click to select files</p>
+                    </div>
+                    <aside>
+                      <h4>Fichiers</h4>
+                      <div className={classes.files}>{files}</div>
+                    </aside>
+                  </section>
+                )}
+              </Dropzone>
+              <button onClick={e => this.handleSubmit(e)}>Envoyer</button>
+            </Paper>
+          </Grid>
+          <Grid item xs={8}>
+            <Paper className={classes.paper}></Paper>
+          </Grid>
+        </Grid>
       </div>
     );
   }
