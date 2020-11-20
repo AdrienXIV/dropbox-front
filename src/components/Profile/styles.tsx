@@ -44,6 +44,14 @@ const styles = (theme: Theme) =>
       margin: '15% 0',
       '& > div': {
         margin: '2.5% 0',
+        display: 'flex',
+        justifyContent: 'flex-end',
+        '&>span': {
+          margin: '0 auto',
+        },
+        '&>svg:hover': {
+          color: 'red',
+        },
       },
     },
   });

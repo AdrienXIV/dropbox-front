@@ -44,6 +44,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   render() {
     const { classes } = this.props;
+
     const files = this.state.files.map((file: any, index: number) => (
       <Chip key={index.toString()} label={file.name} onDelete={() => this.handleDelete(index)} variant='outlined' />
     ));
@@ -57,16 +58,21 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                   <section>
                     <div {...getRootProps({ className: 'dropzone' })} className={classes.base}>
                       <input {...getInputProps()} />
-                      <p>Drag n drop some files here, or click to select files</p>
+                      <p>Glissez les fichiers ici ou cliquez pour les sélectionner</p>
                     </div>
                     <aside>
-                      <h4>Fichiers</h4>
-                      <div className={classes.files}>{files}</div>
+                      {(() =>
+                        this.state.files.length > 0 ? (
+                          <>
+                            <h4>Fichiers</h4>
+                            <div className={classes.files}>{files}</div>
+                            <button onClick={e => this.handleSubmit(e)}>Envoyer</button>
+                          </>
+                        ) : null)()}
                     </aside>
                   </section>
                 )}
               </Dropzone>
-              <button onClick={e => this.handleSubmit(e)}>Envoyer</button>
             </Paper>
           </Grid>
           <Grid item xs={8}>
