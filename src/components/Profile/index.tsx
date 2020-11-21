@@ -1,5 +1,6 @@
 import React from 'react';
-import { Chip, Grid, Paper, withStyles, WithStyles } from '@material-ui/core';
+import { Chip, Grid, Paper, Snackbar, withStyles, WithStyles } from '@material-ui/core';
+import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
 import { sendFiles } from '../../utils/api';
@@ -8,10 +9,14 @@ interface P {}
 interface S {
   files: File[];
   message: string;
+  open: boolean;
+  severity: AlertProps['severity'];
 }
+const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
+
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
-  public state: Readonly<S> = { files: [], message: '' };
+  public state: Readonly<S> = { files: [], message: '', open: false, severity: 'success' };
 
   onDrop(files: File[]) {
     const newFiles = this.state.files;
@@ -37,9 +42,25 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     this.state.files.forEach(file => {
       formData.append('myFiles', file);
     });
-    sendFiles(formData).then(res => {
-      console.log(res.data.message);
-    });
+    sendFiles(formData)
+      .then(({ data }) => {
+        console.log(data.message);
+        this.setState(prev => ({ ...prev, message: data.message, files: [], severity: 'success', open: true }));
+        setTimeout(() => {
+          this.setState(prev => ({ ...prev, open: false }));
+        }, 5000);
+      })
+      .catch(err => {
+        console.log(err.response);
+        this.setState(prev => ({ ...prev, message: err.response.data.error, severity: 'error', open: true }));
+        setTimeout(() => {
+          this.setState(prev => ({ ...prev, open: false }));
+        }, 10000);
+      });
+  }
+
+  handleClose() {
+    this.setState(prev => ({ ...prev, open: false }));
   }
 
   render() {
@@ -50,6 +71,11 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     ));
     return (
       <div className={classes.root}>
+        <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} open={this.state.open} onClose={() => this.handleClose()}>
+          <Alert onClose={() => this.handleClose()} severity={this.state.severity}>
+            {this.state.message}
+          </Alert>
+        </Snackbar>
         <Grid container spacing={3}>
           <Grid item xs={4}>
             <Paper className={classes.paper}>
