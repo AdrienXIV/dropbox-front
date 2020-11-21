@@ -1,5 +1,5 @@
 import { createStyles, Theme } from '@material-ui/core';
-export type Styles = 'root' | 'paper' | 'base' | 'active' | 'accept' | 'reject' | 'files'; // add class create
+export type Styles = 'root' | 'menu' | 'paper' | 'base' | 'active' | 'accept' | 'reject' | 'files' | 'button'; // add class create
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -11,6 +11,9 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+    },
+    menu: {
+      border: '1px solid #d3d4d5',
     },
     base: {
       flex: 1,
@@ -52,6 +55,9 @@ const styles = (theme: Theme) =>
         '&>svg:hover': {
           color: 'red',
         },
+      },
+      button: {
+        margin: theme.spacing(1),
       },
     },
   });
