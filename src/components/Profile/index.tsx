@@ -1,15 +1,16 @@
 import React from 'react';
-import { Grid, Paper, Button, Snackbar, withStyles, WithStyles, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import { Grid, Paper, Button, Snackbar, withStyles, WithStyles, MenuItem, ListItemIcon, ListItemText, Chip } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
-import { sendFiles } from '../../utils/api';
+import { sendFiles, getFiles } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 
 interface P {}
 interface S {
+  files: string[];
   message: string;
   open: boolean;
   severity: AlertProps['severity'];
@@ -19,7 +20,18 @@ const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {.
 
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
-  public state: Readonly<S> = { message: '', open: false, severity: 'success', anchorEl: null };
+  public state: Readonly<S> = { message: '', open: false, severity: 'success', anchorEl: null, files: [] };
+
+  componentDidMount() {
+    getFiles()
+      .then(({ data }) => {
+        console.log(data);
+        this.setState(prev => ({ ...prev, files: data.files }));
+      })
+      .catch(err => {
+        console.log(err.response);
+      });
+  }
 
   onDrop = (files: File[]) => {
     const formData = new FormData();
@@ -48,8 +60,8 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   render() {
     const { classes } = this.props;
-    const { severity, open, message, anchorEl } = this.state;
-    console.log(open);
+    const { severity, open, message, anchorEl, files } = this.state;
+
     return (
       <div className={classes.root}>
         <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={6000} open={open} onClose={this.handleClose}>
@@ -91,7 +103,13 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
             </StyledMenu>
           </Grid>
           <Grid item xs={10}>
-            <Paper className={classes.paper}></Paper>
+            <Paper className={classes.paper}>
+              {files.map((file, index) => (
+                <div key={index.toString()} className={classes.file}>
+                  <Chip label={file} />
+                </div>
+              ))}
+            </Paper>
           </Grid>
         </Grid>
       </div>

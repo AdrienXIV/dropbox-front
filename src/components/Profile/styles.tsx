@@ -1,5 +1,5 @@
 import { createStyles, Theme } from '@material-ui/core';
-export type Styles = 'root' | 'menu' | 'paper' | 'base' | 'active' | 'accept' | 'reject' | 'files' | 'button'; // add class create
+export type Styles = 'root' | 'menu' | 'file' | 'paper' | 'base' | 'active' | 'accept' | 'reject' | 'files' | 'button'; // add class create
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -14,6 +14,10 @@ const styles = (theme: Theme) =>
     },
     menu: {
       border: '1px solid #d3d4d5',
+    },
+    file: {
+      textAlign: 'initial',
+      margin: '2.5% 0',
     },
     base: {
       flex: 1,
