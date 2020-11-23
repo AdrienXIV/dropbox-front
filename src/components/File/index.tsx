@@ -5,12 +5,15 @@ import AddIcon from '@material-ui/icons/Add';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
-import { sendFiles, getFiles } from '../../utils/api';
+import { sendFiles, getFiles, getFile } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
-import history from '../../history';
-interface P {}
+import { match } from 'react-router-dom';
+import FileViewer from 'react-file-viewer';
+interface P {
+  match: any;
+}
 interface S {
-  files: string[];
+  file: string;
   message: string;
   open: boolean;
   severity: AlertProps['severity'];
@@ -20,16 +23,21 @@ const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {.
 
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
-  public state: Readonly<S> = { message: '', open: false, severity: 'success', anchorEl: null, files: [] };
+  public state: Readonly<S> = { message: '', open: false, severity: 'success', anchorEl: null, file: '' };
 
   componentDidMount() {
-    getFiles()
-      .then(({ data }) => {
-        this.setState(prev => ({ ...prev, files: data.files }));
-      })
-      .catch(err => {
-        console.log(err.response);
+    console.log(this.props.match.params.file);
+    /*getFile(this.props.match.params.file).then(({ data }) => {
+      console.log(data);
+      const f = new Blob(data, {
+        type: 'application/pdf',
       });
+      //Build a URL from the file
+      const fileURL = URL.createObjectURL(f);
+      //Open the URL on new Window
+      window.open(fileURL);
+      this.setState({ file: String(data) });
+    });*/
   }
 
   onDrop = (files: File[]) => {
@@ -57,10 +65,18 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     this.setState({ open: false });
   };
 
+  displayDoc = () => {
+    return (
+      <FileViewer
+        fileType={'pdf'}
+        filePath={`http://localhost:5000/share/files/${this.props.match.params.file}?id=h30Z2MVtz47Ju5V87APzu6nIUOaUPm5hwne2vfH4Tjn8Gv6F`}
+      />
+    );
+  };
   render() {
     const { classes } = this.props;
-    const { severity, open, message, anchorEl, files } = this.state;
-
+    const { severity, open, message, anchorEl, file } = this.state;
+    console.log(this.state);
     return (
       <div className={classes.root}>
         <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={6000} open={open} onClose={this.handleClose}>
@@ -102,13 +118,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
             </StyledMenu>
           </Grid>
           <Grid item xs={10}>
-            <Paper className={classes.paper}>
-              {files.map((file, index) => (
-                <div key={index.toString()} className={classes.file}>
-                  <Chip label={file} onClick={() => history.push(`/profil/${file}`)} />
-                </div>
-              ))}
-            </Paper>
+            <Paper className={classes.paper}>{this.displayDoc()}</Paper>
           </Grid>
         </Grid>
       </div>

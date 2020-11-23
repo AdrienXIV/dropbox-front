@@ -3,9 +3,11 @@ import './App.css';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/Register';
 import Home from './components/Home';
+import File from './components/File';
 
 import history from './history';
 import Profile from './components/Profile';
+import { Filter1TwoTone } from '@material-ui/icons';
 
 const isConnected = false;
 
@@ -20,6 +22,7 @@ function App(): JSX.Element {
           <Route exact path='/' component={Home.Display} />
           <Route exact path='/inscription' component={Register} />
           <Route exact path='/profil' component={Profile.Display} />
+          <Route exact path='/profil/:file' component={File.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
         </Switch>
       </Router>
