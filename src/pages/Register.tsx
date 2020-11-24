@@ -37,11 +37,20 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
       console.error(error);
     }
   }
-  handleChange = (event: React.ChangeEvent) => {
-    
-    this.setState(prev=>({...prev,
-      [event.target.name]: event.target.value
-    }));
+  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+
+    this.setState({email: event.target.email});
+    this.setState({email: event.target.username});
+    this.setState({password: event.target.password});
+    this.setState({confirm: event.target.confirm});
+  
+    const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
+    if(regex.exec(this.state.password))
+    {
+    this.setState({password: event.target.password});
+    this.setState({password: event.target.confirm});
+    }
+    console.error('mot de passe manquant');
   }
 
   render() {

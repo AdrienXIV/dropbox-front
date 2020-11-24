@@ -33,13 +33,16 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
       console.error(error);
     }
   }
-  handleChange = (event: React.ChangeEvent) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 
-    this.setState(prev => ({
-      ...prev,
-      [event.target.name]: event.target.value
-    }));
+  const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
+  if(regex.exec(this.state.password))
+  {
+  this.setState({email: e.target.value});
+  this.setState({password: e.target.password});
   }
+}
+  
 
   render() {
     const { classes } = this.props;
@@ -50,7 +53,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
             <Typography component='h5' variant='h5' align='center'>
               Connexion
             </Typography>
-            <form className={classes.form} noValidate autoComplete='off'>
+            <form className={classes.form} noValidate autoComplete='off' >
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems='flex-end'>
                   <Grid item>
