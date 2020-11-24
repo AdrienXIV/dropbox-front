@@ -11,6 +11,7 @@ const styles = (theme: Theme) =>
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
+      height: '90vh',
     },
     menu: {
       border: '1px solid #d3d4d5',

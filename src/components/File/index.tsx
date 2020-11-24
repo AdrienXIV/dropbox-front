@@ -1,14 +1,12 @@
 import React from 'react';
-import { Grid, Paper, Button, Snackbar, withStyles, WithStyles, MenuItem, ListItemIcon, ListItemText, Chip } from '@material-ui/core';
+import { Grid, Paper, Button, Snackbar, withStyles, WithStyles, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
-import { sendFiles, getFiles, getFile } from '../../utils/api';
+import { sendFiles, getFile } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
-import { match } from 'react-router-dom';
-import FileViewer from 'react-file-viewer';
 interface P {
   match: any;
 }
@@ -27,17 +25,9 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   componentDidMount() {
     console.log(this.props.match.params.file);
-    /*getFile(this.props.match.params.file).then(({ data }) => {
-      console.log(data);
-      const f = new Blob(data, {
-        type: 'application/pdf',
-      });
-      //Build a URL from the file
-      const fileURL = URL.createObjectURL(f);
-      //Open the URL on new Window
-      window.open(fileURL);
-      this.setState({ file: String(data) });
-    });*/
+    getFile(this.props.match.params.file).then(({ data }) => {
+      this.setState({ file: 'data:application/pdf;base64, ' + data });
+    });
   }
 
   onDrop = (files: File[]) => {
@@ -65,14 +55,6 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     this.setState({ open: false });
   };
 
-  displayDoc = () => {
-    return (
-      <FileViewer
-        fileType={'pdf'}
-        filePath={`http://localhost:5000/share/files/${this.props.match.params.file}?id=h30Z2MVtz47Ju5V87APzu6nIUOaUPm5hwne2vfH4Tjn8Gv6F`}
-      />
-    );
-  };
   render() {
     const { classes } = this.props;
     const { severity, open, message, anchorEl, file } = this.state;
@@ -118,7 +100,9 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
             </StyledMenu>
           </Grid>
           <Grid item xs={10}>
-            <Paper className={classes.paper}>{this.displayDoc()}</Paper>
+            <Paper className={classes.paper}>
+              <iframe src={file} height='100%' width='100%' />
+            </Paper>
           </Grid>
         </Grid>
       </div>

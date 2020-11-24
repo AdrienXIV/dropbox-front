@@ -4,7 +4,7 @@ import { URL_API } from '../info';
 // définition de l'url de l'api comme base afin d'éviter de la réecrire
 axios.defaults.baseURL = URL_API;
 const token =
-  'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOjU2NTE5Mi4yNTAxNDcyODk1LCJlbWFpbCI6ImFkcmlfMDBAaG90bWFpbC5mciIsInVzZXJuYW1lIjoiQWRyaWVuIiwiaWF0IjoxNjA2MTU3OTk1LCJleHAiOjE2MDYyNDQzOTV9.hlhHiMTuK-ubpo2Y4Cb7-81eb2yZNTHaXIibi7-1mE-GxGmyrIPuts9jbkaX2-cB';
+  'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOjU2NTE5Mi4yNTAxNDcyODk1LCJlbWFpbCI6ImFkcmlfMDBAaG90bWFpbC5mciIsInVzZXJuYW1lIjoiQWRyaWVuIiwiaWF0IjoxNjA2MjQxNTM3LCJleHAiOjE2MDYzMjc5Mzd9.b3SrgXtUvLZZQ1qh5Ng9d5gzFM58Qo_eVWqZR7XmrOTJAVHzmWDpylHSh7YaUHJt';
 
 /**
  * GET
@@ -22,7 +22,6 @@ export const getFile = (fileName: string) => {
     headers: {
       authorization: `Baerer ${token}`,
     },
-    responseType: 'blob',
   });
 };
 
