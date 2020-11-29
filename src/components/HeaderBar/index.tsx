@@ -8,12 +8,12 @@ import Badge from '@material-ui/core/Badge';
 import Button from '@material-ui/core/Button'
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
-import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
+//import NoEncryptionIcon from '@material-ui/icons/NoEncryption';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import { Grid, withStyles, WithStyles } from '@material-ui/core';
+import { withStyles, WithStyles } from '@material-ui/core';
 import styles, { Styles } from './styles';
 import history from "../../history"
 

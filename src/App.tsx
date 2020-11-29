@@ -7,10 +7,10 @@ import { HeaderBar } from './components/HeaderBar';
 
 import history from './history';
 
-const isConnected = false;
+//const isConnected = false;
 
 // si la personne n'est pas connectée, on la redirige vers l'inscription
-const ProtectedRoute = ({ ...props }) => (!isConnected ? <Redirect to='/' /> : <Route {...props} />);
+//const ProtectedRoute = ({ ...props }) => (!isConnected ? <Redirect to='/' /> : <Route {...props} />);
 
 function App(): JSX.Element {
   return (

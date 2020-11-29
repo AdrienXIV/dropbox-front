@@ -5,7 +5,6 @@ import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
 import { register } from "../utils/api";
-
 import history from '../history'
 interface P { }
 interface S {
@@ -24,7 +23,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
       password: "",
       confirm: ""
     };
-    this.handleChange =this.handleChange.bind(this)
+  //  this.handleChange =this.handleChange.bind(this)
   }
   
   async send(e:React.MouseEvent) {
@@ -37,16 +36,23 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
       console.error(error);
     }
   }
-  handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState(prevState =>({
+      ...prevState,
+    [e.target.name]:e.target.value
+  })
 
-  
-    const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
-    if(regex.test(event.target.password))
+    /*const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
+    if(!regex.test(this.state.password))
     {
-
-    }
+      this.setState(prevState =>({
+        ...prevState,
+        [e.target.password]: e.target.password
+      }));
+  }else{
     console.error('mot de passe manquant');
-  }
+  }*/
+)}
 
   render() {
     const { classes } = this.props;
@@ -99,9 +105,11 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
                     </Grid>
                   </Grid>
                 </div>
-                <Button type='submit' onClick={(e)=>this.send(e)} variant='contained' className={classes.buttonSignup}>
+                <div className={classes.buttonSignup}>
+                <Button type='submit'  variant='contained' >
                   S&apos;inscrire
             </Button>
+            </div>
               </form>
             </CardContent>
           </Card>

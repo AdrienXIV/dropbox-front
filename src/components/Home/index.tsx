@@ -34,14 +34,11 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
     }
   }
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-
-  const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
-  if(regex.exec(this.state.password))
-  {
-  this.setState({email: e.target.value});
-  this.setState({password: e.target.password});
-  }
-}
+    this.setState(prevState =>({
+      ...prevState,
+    [e.target.name]:e.target.value
+  })
+)}
   
 
   render() {
