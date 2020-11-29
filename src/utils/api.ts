@@ -9,8 +9,9 @@ const token =
 /**
  * GET
  */
-export const getFiles = () => {
+export const getFiles = (path: string) => {
   return axios.get('/share/files', {
+    params: { path },
     headers: {
       authorization: `Baerer ${token}`,
     },
