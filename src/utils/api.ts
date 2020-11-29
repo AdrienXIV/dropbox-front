@@ -4,7 +4,7 @@ import { URL_API } from '../info';
 // définition de l'url de l'api comme base afin d'éviter de la réecrire
 axios.defaults.baseURL = URL_API;
 const token =
-  'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOjU2NTE5Mi4yNTAxNDcyODk1LCJlbWFpbCI6ImFkcmlfMDBAaG90bWFpbC5mciIsInVzZXJuYW1lIjoiQWRyaWVuIiwiaWF0IjoxNjA2MjQxNTM3LCJleHAiOjE2MDYzMjc5Mzd9.b3SrgXtUvLZZQ1qh5Ng9d5gzFM58Qo_eVWqZR7XmrOTJAVHzmWDpylHSh7YaUHJt';
+  'eyJhbGciOiJIUzM4NCIsInR5cCI6IkpXVCJ9.eyJzdWIiOjU2NTE5Mi4yNTAxNDcyODk1LCJlbWFpbCI6ImFkcmlfMDBAaG90bWFpbC5mciIsInVzZXJuYW1lIjoiQWRyaWVuIiwiaWF0IjoxNjA2NjQ3NzM3LCJleHAiOjE2MDY3MzQxMzd9.nFxtXaBKjdRfzWODg-LEwSdN4K_1RXel1n8YaQ5KUqvB8kD4_Aqt2HyQa903keL2';
 
 /**
  * GET
