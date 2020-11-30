@@ -4,7 +4,6 @@ import { getCookie } from './cookie';
 
 // définition de l'url de l'api comme base afin d'éviter de la réecrire
 axios.defaults.baseURL = URL_API;
-console.log('header', getCookie('token'));
 // ajout du token dans les requetes http
 axios.defaults.headers = {
   authorization: getCookie('token') ? `Baerer ${getCookie('token')}` : undefined,
