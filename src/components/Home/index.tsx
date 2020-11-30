@@ -30,7 +30,6 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
     e.preventDefault();
     try {
       const { data } = await login(this.state);
-      console.log('data', data);
       setCookie('token', data.token, 1);
       history.push('/profil');
     } catch (error) {
