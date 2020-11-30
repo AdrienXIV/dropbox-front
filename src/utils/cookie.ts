@@ -4,8 +4,8 @@ export const setCookie = (cname: string, cvalue: string, exdays: number) => {
   const expires = 'expires=' + d.toUTCString();
   document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
 };
-/*
-export const getCookie = cname => {
+
+export const getCookie = (cname: string) => {
   const name = cname + '=';
   const ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
@@ -18,7 +18,7 @@ export const getCookie = cname => {
     }
   }
   return '';
-};*/
+};
 /*
 export const checkCookie = (cname) => {
   let user = getCookie(cname);

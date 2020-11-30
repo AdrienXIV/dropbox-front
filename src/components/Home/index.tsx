@@ -26,16 +26,17 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Home) as React.ComponentType<P>;
   public state: Readonly<S> = { email: '', password: '' };
 
-  async send(e: React.MouseEvent) {
+  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
       const { data } = await login(this.state);
+      console.log('data', data);
       setCookie('token', data.token, 1);
-      history.push('/inscription');
+      history.push('/profil');
     } catch (error) {
       console.error(error);
     }
-  }
+  };
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     this.setState(prevState => ({
       ...prevState,
@@ -52,7 +53,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
             <Typography component='h5' variant='h5' align='center'>
               Connexion
             </Typography>
-            <form className={classes.form} noValidate autoComplete='off'>
+            <form onSubmit={this.handleSubmit} className={classes.form} noValidate autoComplete='off'>
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems='flex-end'>
                   <Grid item>
@@ -100,7 +101,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
             <Typography variant='subtitle1' align='center'>
               Groupe 6
             </Typography>
-            <Button type='submit' onClick={e => this.send(e)} variant='contained' className={classes.buttonSignup}>
+            <Button type='submit' variant='contained' className={classes.buttonSignup}>
               S&apos;inscrire
             </Button>
           </CardContent>
