@@ -8,6 +8,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles, WithStyles } from '@material-ui/core';
 import styles, { Styles } from './styles';
 import history from '../../history';
+import { setCookie } from '../../utils/cookie';
 
 interface P {}
 // interface S {}
@@ -15,6 +16,7 @@ interface P {}
 export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
   public static Display = withStyles(styles as any)(HeaderBar) as React.ComponentType<P>;
   disconnect = () => {
+    setCookie('token', '', 0);
     history.push('/');
   };
 
