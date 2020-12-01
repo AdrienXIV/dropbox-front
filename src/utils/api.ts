@@ -12,6 +12,15 @@ axios.defaults.headers = {
 /**
  * GET
  */
+export const getFiles = (path: string) => {
+  return axios.get('/share/files', {
+    params: { path },
+  });
+};
+
+export const getFile = (fileName: string) => {
+  return axios.get(`/share/files/${fileName}`);
+};
 
 /**
  * POST

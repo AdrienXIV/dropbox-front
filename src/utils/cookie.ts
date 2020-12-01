@@ -4,8 +4,13 @@ export const setCookie = (cname: string, cvalue: string, exdays: number) => {
   const expires = 'expires=' + d.toUTCString();
   document.cookie = cname + '=' + cvalue + ';' + expires + ';path=/';
 };
+<<<<<<< HEAD
 
 export const getCookie = (cname: string) => {
+=======
+/*
+export const getCookie = cname => {
+>>>>>>> 2b375b20882c15899594cd7e5d2b016404b5af85
   const name = cname + '=';
   const ca = document.cookie.split(';');
   for (let i = 0; i < ca.length; i++) {
@@ -18,7 +23,11 @@ export const getCookie = (cname: string) => {
     }
   }
   return '';
+<<<<<<< HEAD
 };
+=======
+};*/
+>>>>>>> 2b375b20882c15899594cd7e5d2b016404b5af85
 /*
 export const checkCookie = (cname) => {
   let user = getCookie(cname);
