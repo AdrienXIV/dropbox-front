@@ -27,10 +27,10 @@ function App(): JSX.Element {
       <Router history={history}>
         <Switch>
           <Route exact path='/' component={Home.Display} />
-          <Route exact path='/inscription' component={Register} />
+          <Route exact path='/inscription' component={Register.Display} />
+          {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/profil' component={Profile.Display} />
           <ProtectedRoute exact path='/profil/:file' component={File.Display} />
-          {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
         </Switch>
       </Router>
     </div>

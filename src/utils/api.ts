@@ -32,6 +32,9 @@ export const login = (data: any) => {
   return axios.post(`/auth/login`, data);
 };
 
+export const sendFiles = (data: any) => {
+  return axios.post('/share/new-files', data);
+};
 /**
  * PATCH
  */
