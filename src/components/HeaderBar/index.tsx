@@ -33,7 +33,7 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
               Dropbox-IMIE
             </Typography>
 
-            <div style={{ width: '100%', color: 'white', textAlign: 'end' }}>
+            <div className={classes.signout}>
               <Button onClick={this.disconnect}>Se déconnecter</Button>
             </div>
           </Toolbar>
