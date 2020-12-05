@@ -35,6 +35,10 @@ export const login = (data: any) => {
 export const sendFiles = (data: any) => {
   return axios.post('/share/new-files', data);
 };
+
+export const sendFilesInFolder = (data: any) => {
+  return axios.post('/share/new-folder', data);
+};
 /**
  * PATCH
  */

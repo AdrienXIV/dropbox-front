@@ -19,10 +19,17 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
-import { sendFiles, getFiles } from '../../utils/api';
+import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import history from '../../history';
 
+declare module 'react' {
+  interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
+    // extends React's HTMLAttributes
+    webkitdirectory?: string;
+    directory?: string;
+  }
+}
 interface P {}
 interface S {
   path: string[];
@@ -34,12 +41,19 @@ interface S {
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
 
+//TODO: rafraichir le composant pour refaire une requete afin de mettre à jour l'aperçu des fichiers
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
-  public state: Readonly<S> = { message: '', open: false, severity: 'success', anchorEl: null, files: [], path: [''] };
+  public state: Readonly<S> = {
+    message: '',
+    open: false,
+    severity: 'success',
+    anchorEl: null,
+    files: [],
+    path: [''],
+  };
 
   componentDidMount() {
-    console.log('mount');
     getFiles(this.state.path.join('/'))
       .then(({ data }) => {
         this.setState({ files: data.files });
@@ -52,7 +66,6 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   onDrop = (files: File[]) => {
     const formData = new FormData();
     files.forEach(file => {
-      // si le fichier exise déjà, on ne l'ajoute pas
       formData.append('myFiles', file);
     });
     sendFiles(formData)
@@ -64,6 +77,23 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
         this.setState({ message: err.response.data.error, severity: 'error', open: true });
       });
   };
+  importFolder = (e: any) => {
+    const formData = new FormData();
+    const files = e.target.files;
+    Object.values(files).forEach((file: any) => {
+      formData.append('names', String(file.webkitRelativePath));
+      formData.append('myFiles', file, file.webkitRelativePath);
+    });
+    sendFilesInFolder(formData)
+      .then(({ data }) => {
+        this.setState({ message: data.message, severity: 'success', open: true });
+      })
+      .catch(err => {
+        console.log(err.response);
+        this.setState({ message: err.response.data.error, severity: 'error', open: true });
+      });
+  };
+
   handleClickMenu = (event: React.MouseEvent<HTMLElement>) => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -90,11 +120,18 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     const { path } = this.state;
     return (
       <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
-        <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(' adri_00@hotmail.fr')}>
+        <Link
+          className={classes.breadcrumb}
+          color='inherit'
+          onClick={() => this.handleClickBreadcrumbs(' adri_00@hotmail.fr')}>
           adri_00@hotmail.fr
         </Link>
         {path.map((val: string, index: number) => (
-          <Link key={index.toString()} className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(val)}>
+          <Link
+            key={index.toString()}
+            className={classes.breadcrumb}
+            color='inherit'
+            onClick={() => this.handleClickBreadcrumbs(val)}>
             {val}
           </Link>
         ))}
@@ -108,7 +145,11 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
     return (
       <div className={classes.root}>
-        <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={6000} open={open} onClose={this.handleClose}>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          autoHideDuration={6000}
+          open={open}
+          onClose={this.handleClose}>
           <Alert onClose={this.handleClose} severity={severity}>
             {message}
           </Alert>
@@ -122,14 +163,21 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
               color='primary'
               variant='contained'
               className={classes.button}
-              onClick={this.handleClickMenu}
-            >
+              onClick={this.handleClickMenu}>
               Nouveau
             </Button>
             <StyledMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleCloseMenu}>
               <MenuItem>
                 <ListItemIcon>
                   <FolderIcon />
+                  <input
+                    type='file'
+                    id='filepicker'
+                    name='fileList'
+                    webkitdirectory=''
+                    directory=''
+                    onChange={this.importFolder}
+                  />
                 </ListItemIcon>
                 <ListItemText primary='Dossier' />
               </MenuItem>
