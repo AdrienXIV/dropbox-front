@@ -7,6 +7,7 @@ import File from './components/File';
 import history from './history';
 import Profile from './components/Profile';
 import { HeaderBar } from './components/HeaderBar';
+import { FooterBar } from './components/FooterBar';
 import { getCookie } from './utils/cookie';
 
 // si la personne n'est pas connectée, on la redirige vers l'inscription
@@ -17,6 +18,7 @@ const ProtectedRoute = ({ ...props }) => {
     <>
       <HeaderBar.Display />
       <Route {...props} />
+      <FooterBar.Display />
     </>
   );
 };

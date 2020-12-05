@@ -91,7 +91,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>
-                <Button type='submit' variant='contained'>
+                <Button type='submit' variant='contained'>brew 
                   Se connecter
                 </Button>
               </div>
