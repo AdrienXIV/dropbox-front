@@ -34,6 +34,7 @@ interface P {}
 interface S {
   path: string[];
   files: string[];
+  dirs: string[];
   message: string;
   open: boolean;
   severity: AlertProps['severity'];
@@ -50,12 +51,14 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     severity: 'success',
     anchorEl: null,
     files: [],
+    dirs: [],
     path: [''],
   };
 
   componentDidMount() {
     getFiles(this.state.path.join('/'))
       .then(({ data }) => {
+        this.setState({ dirs: data.dirs });
         this.setState({ files: data.files });
       })
       .catch(err => {
@@ -141,7 +144,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   render() {
     const { classes } = this.props;
-    const { severity, open, message, anchorEl, files } = this.state;
+    const { severity, open, message, anchorEl, files, dirs, path } = this.state;
 
     return (
       <div className={classes.root}>
@@ -197,6 +200,18 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
           <Grid item xs={10}>
             {this.showBreadcrumbs()}
             <Paper className={classes.paper}>
+              {dirs.map((dir, index) => (
+                <div key={index.toString()} className={classes.file}>
+                  <Button
+                    startIcon={<FolderIcon />}
+                    onClick={() => {
+                      if (path[0] === '') this.setState(prev => ({ ...prev, path: [dir, ''] }));
+                      else this.setState(prev => ({ ...prev, path: [...path, dir, ''] }));
+                    }}>
+                    {dir}
+                  </Button>
+                </div>
+              ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
                   <Chip label={file} onClick={() => history.push(`/profil/${file}`)} />
