@@ -15,8 +15,9 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
 import history from '../../history';
 import { login } from '../../utils/api';
-import { setCookie } from '../../utils/cookie';
+import { setCookie, getCookie } from '../../utils/cookie';
 import axios from 'axios';
+import { Redirect } from 'react-router-dom';
 
 interface P {}
 interface S {
@@ -50,6 +51,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
 
   render() {
     const { classes } = this.props;
+    if (getCookie('token')) return <Redirect to='/profil' />;
     return (
       <Container maxWidth='lg' className={classes.container}>
         <Card className={classes.root}>
