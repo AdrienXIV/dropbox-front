@@ -52,10 +52,11 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     anchorEl: null,
     files: [],
     dirs: [],
-    path: [''],
+    path: [],
   };
 
   componentDidMount() {
+    // const pathname = this.state.path[0] === '' ? this.state.path.join('/') : this.state.path.join('/') + '/';
     getFiles(this.state.path.join('/'))
       .then(({ data }) => {
         this.setState({ dirs: data.dirs });
@@ -107,34 +108,39 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     this.setState({ open: false });
   };
 
-  handleClickBreadcrumbs = (value: string) => {
-    if (value === 'adri_00@hotmail.fr') this.setState({ path: [''] });
-    getFiles(this.state.path.join('/'))
+  handleClickBreadcrumbs = (index: number) => {
+    let path = this.state.path;
+    // si l'on clique sur la racine du fichier, on réinitialise le tableau
+    if (index + 1 === 0) path = [];
+    // sinon on supprime la ou les cases d'après celle que l'on a cliqué
+    else path = path.slice(0, index + 1);
+
+    const pathname = path.join('/') + '/';
+
+    getFiles(pathname)
       .then(({ data }) => {
-        this.setState({ files: data.files });
+        this.setState(prev => ({ ...prev, files: data.files, dirs: data.dirs, path }));
       })
       .catch(err => {
         console.log(err.response);
       });
   };
 
+  // afficher la navigation dans les dossiers
   showBreadcrumbs = () => {
     const { classes } = this.props;
     const { path } = this.state;
     return (
       <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
-        <Link
-          className={classes.breadcrumb}
-          color='inherit'
-          onClick={() => this.handleClickBreadcrumbs(' adri_00@hotmail.fr')}>
-          adri_00@hotmail.fr
+        <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(-1)}>
+          /
         </Link>
         {path.map((val: string, index: number) => (
           <Link
             key={index.toString()}
             className={classes.breadcrumb}
             color='inherit'
-            onClick={() => this.handleClickBreadcrumbs(val)}>
+            onClick={() => this.handleClickBreadcrumbs(index)}>
             {val}
           </Link>
         ))}
@@ -205,8 +211,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                   <Button
                     startIcon={<FolderIcon />}
                     onClick={() => {
-                      if (path[0] === '') this.setState(prev => ({ ...prev, path: [dir, ''] }));
-                      else this.setState(prev => ({ ...prev, path: [...path, dir, ''] }));
+                      this.setState({ path: [...path, dir] });
                     }}>
                     {dir}
                   </Button>
