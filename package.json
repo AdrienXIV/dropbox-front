@@ -16,6 +16,7 @@
     "@types/react-dom": "^16.9.9",
     "axios": "^0.21.0",
     "mammoth": "^1.4.14",
+    "monaco-editor": "^0.21.2",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-dropzone": "^11.2.4",
