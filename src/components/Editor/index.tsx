@@ -9,7 +9,6 @@ import 'codemirror/mode/css/css';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 interface P {
   language: string;
-  displayName: string;
   value: string;
   onChange(editor: any, data: any, value: string): any;
 }
@@ -18,7 +17,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>> {
   public static Display = withStyles(styles as any)(Editor) as React.ComponentType<P>;
 
   render() {
-    const { classes, language, displayName, value, onChange } = this.props;
+    const { classes, language, value, onChange } = this.props;
     return (
       <div className={classes.root}>
         <ControlledEditor
