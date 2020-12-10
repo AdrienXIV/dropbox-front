@@ -1,5 +1,15 @@
 import React from 'react';
-import { Grid, Paper, Button, Snackbar, withStyles, WithStyles, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
+import {
+  Grid,
+  Paper,
+  Button,
+  Snackbar,
+  withStyles,
+  WithStyles,
+  MenuItem,
+  ListItemIcon,
+  ListItemText,
+} from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -7,6 +17,8 @@ import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
 import { sendFiles, getFile } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
+import Editor from '../Editor';
+import history from '../../history';
 interface P {
   match: any;
 }
@@ -16,17 +28,31 @@ interface S {
   open: boolean;
   severity: AlertProps['severity'];
   anchorEl: null | HTMLElement;
+  isCode: boolean;
+  language: string;
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
 
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
-  public state: Readonly<S> = { message: '', open: false, severity: 'success', anchorEl: null, file: '' };
+  public state: Readonly<S> = {
+    message: '',
+    open: false,
+    severity: 'success',
+    anchorEl: null,
+    file: '',
+    isCode: false,
+    language: 'xml',
+  };
 
   componentDidMount() {
     console.log(this.props.match.params.file);
     getFile(this.props.match.params.file).then(({ data }) => {
-      this.setState({ file: 'data:application/pdf;base64, ' + data });
+      if (!data.isCode) {
+        this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
+      } else {
+        this.setState({ file: data.file, isCode: true, language: 'xml' });
+      }
     });
   }
 
@@ -57,11 +83,15 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   render() {
     const { classes } = this.props;
-    const { severity, open, message, anchorEl, file } = this.state;
-    console.log(this.state);
+    const { severity, open, message, anchorEl, file, isCode, language } = this.state;
+
     return (
       <div className={classes.root}>
-        <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={6000} open={open} onClose={this.handleClose}>
+        <Snackbar
+          anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+          autoHideDuration={6000}
+          open={open}
+          onClose={this.handleClose}>
           <Alert onClose={this.handleClose} severity={severity}>
             {message}
           </Alert>
@@ -75,8 +105,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
               color='primary'
               variant='contained'
               className={classes.button}
-              onClick={this.handleClickMenu}
-            >
+              onClick={this.handleClickMenu}>
               Nouveau
             </Button>
             <StyledMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleCloseMenu}>
@@ -101,7 +130,11 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
           </Grid>
           <Grid item xs={10}>
             <Paper className={classes.paper}>
-              <iframe src={file} height='100%' width='100%' />
+              {isCode ? (
+                <Editor.Display refValue={undefined} value={file} language={language} />
+              ) : (
+                <iframe src={file} height='100%' width='100%' />
+              )}
             </Paper>
           </Grid>
         </Grid>

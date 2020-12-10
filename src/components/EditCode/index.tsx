@@ -6,6 +6,7 @@ import styles, { Styles } from './styles';
 import { js_beautify, html_beautify } from 'js-beautify';
 interface P {
   match: any;
+  location: any;
 }
 
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
@@ -16,11 +17,12 @@ export default class EditCode extends React.Component<P & WithStyles<Styles>> {
   private EditorRef = React.createRef();
 
   render() {
-    const { classes } = this.props;
+    console.log(this.props);
+    const { classes, location } = this.props;
 
     return (
       <div className={classes.root}>
-        <Editor.Display refValue={this.EditorRef} language='xml' />
+        <Editor.Display refValue={this.EditorRef} value={location.state.file} language={location.state.language} />
       </div>
     );
   }

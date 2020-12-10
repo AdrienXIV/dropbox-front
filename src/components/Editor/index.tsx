@@ -11,7 +11,8 @@ import { js_beautify, html_beautify } from 'js-beautify';
 
 interface P {
   language: string;
-  refValue?: React.RefObject<any>;
+  refValue: React.RefObject<any> | undefined;
+  value: string;
 }
 interface S {
   code: string;
@@ -20,10 +21,10 @@ interface S {
 
 export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Editor) as React.ComponentType<P>;
-  public state: Readonly<S> = { code: '', langage: 'html' };
+  public state: Readonly<S> = { code: '', langage: 'xml' };
 
   componentDidMount() {
-    this.setState({ langage: this.props.language });
+    this.setState({ langage: this.props.language, code: this.props.value });
   }
 
   onChange = (editor: any, change: any, value: string) => {
@@ -52,7 +53,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
           ref={refValue}
           onBeforeChange={this.onChange}
           value={code}
-          className='code-mirror-wrapper'
+          className={classes.codeMirror}
           options={{
             lineWrapping: true,
             lint: true,
