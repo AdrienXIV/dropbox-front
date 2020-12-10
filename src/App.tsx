@@ -8,7 +8,6 @@ import history from './history';
 import Profile from './components/Profile';
 import { HeaderBar } from './components/HeaderBar';
 import { getCookie } from './utils/cookie';
-import EditCode from './components/EditCode/index';
 
 // si la personne n'est pas connectée, on la redirige vers l'inscription
 const ProtectedRoute = ({ ...props }) => {
@@ -31,7 +30,6 @@ function App(): JSX.Element {
           <Route exact path='/inscription' component={Register.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/profil' component={Profile.Display} />
-          <ProtectedRoute exact path='/profil/edit-code' component={EditCode.Display} />
           <ProtectedRoute exact path='/profil/:file' component={File.Display} />
         </Switch>
       </Router>
