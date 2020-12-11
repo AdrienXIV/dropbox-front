@@ -1,6 +1,5 @@
 import React from 'react';
-import {  withStyles, WithStyles, CardContent, } from '@material-ui/core';
-
+import {  withStyles, WithStyles ,Grid} from '@material-ui/core';
 import styles, { Styles } from './styles';
 
 interface P {}
@@ -12,11 +11,21 @@ export class FooterBar extends React.Component<P & WithStyles<Styles>> {
   render() {
     const { classes } = this.props;
     return (
-        <div className = {classes.footerBar}>
-              <h1 className = {classes.title}>
-                  footer
-              </h1>
-        </div>
+      <div className = {classes.footerBar} >
+            <div className={classes.root}>
+            <Grid container spacing={6}>
+              <Grid item xs={3}>
+                <div className={classes.paper}>dropbox-imie</div>
+              </Grid>  
+              <Grid item xs={3}>
+                <div className={classes.paper}>by gaye & adrien</div>
+              </Grid>      
+              <Grid item xs={3}>
+                <div className={classes.paper}>by gaye & adrien</div>
+              </Grid>
+            </Grid>
+          </div>
+      </div>
       );
   }
 }

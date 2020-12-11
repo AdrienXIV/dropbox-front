@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/Register';
+import ModifierProfil from './pages/ModifyProfil';
 import Home from './components/Home';
 import File from './components/File';
 import history from './history';
@@ -32,6 +33,7 @@ function App(): JSX.Element {
           <Route exact path='/inscription' component={Register.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/profil' component={Profile.Display} />
+          <ProtectedRoute exact path='/ModifierProfil' component={ModifierProfil.Display} />
           <ProtectedRoute exact path='/profil/:file' component={File.Display} />
         </Switch>
       </Router>
