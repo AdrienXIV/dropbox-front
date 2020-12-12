@@ -1,5 +1,26 @@
-import { createStyles, Theme } from '@material-ui/core';
+import React from 'react';
+import { createStyles, withStyles, Theme, MenuProps, Menu } from '@material-ui/core';
 export type Styles = 'root' | 'container' | 'margin' | 'blockLeft' | 'blockRight' | 'form' | 'buttonSignup' | 'buttonSignin'; // add class create
+
+export const StyledMenu = withStyles({
+  paper: {
+    border: '1px solid #d3d4d5',
+  },
+})((props: MenuProps) => (
+  <Menu
+    elevation={0}
+    getContentAnchorEl={null}
+    anchorOrigin={{
+      vertical: 'bottom',
+      horizontal: 'center',
+    }}
+    transformOrigin={{
+      vertical: 'top',
+      horizontal: 'center',
+    }}
+    {...props}
+  />
+));
 
 const styles = (theme: Theme) =>
   createStyles({

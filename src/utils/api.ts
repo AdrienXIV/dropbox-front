@@ -12,6 +12,15 @@ axios.defaults.headers = {
 /**
  * GET
  */
+export const getFiles = (path: string) => {
+  return axios.get('/share/files', {
+    params: { path },
+  });
+};
+
+export const getFile = (fileName: string) => {
+  return axios.get(`/share/files/${fileName}`);
+};
 
 /**
  * POST
@@ -23,6 +32,13 @@ export const login = (data: any) => {
   return axios.post(`/auth/login`, data);
 };
 
+export const sendFiles = (data: any) => {
+  return axios.post('/share/new-files', data);
+};
+
+export const sendFilesInFolder = (data: any) => {
+  return axios.post('/share/new-folder', data);
+};
 /**
  * PATCH
  */

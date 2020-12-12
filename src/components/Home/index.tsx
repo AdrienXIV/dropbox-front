@@ -16,6 +16,7 @@ import styles, { Styles } from './styles';
 import history from '../../history';
 import { login } from '../../utils/api';
 import { setCookie } from '../../utils/cookie';
+import axios from 'axios';
 
 interface P {}
 interface S {
@@ -31,6 +32,10 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
     try {
       const { data } = await login(this.state);
       setCookie('token', data.token, 1);
+      // ajout du token dans les requetes http
+      axios.defaults.headers = {
+        authorization: `Baerer ${data.token}`,
+      };
       history.push('/profil');
     } catch (error) {
       console.error(error);
