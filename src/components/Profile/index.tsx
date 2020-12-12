@@ -34,6 +34,7 @@ interface P {}
 interface S {
   path: string[];
   files: string[];
+  dirs: string[];
   message: string;
   open: boolean;
   severity: AlertProps['severity'];
@@ -50,12 +51,15 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     severity: 'success',
     anchorEl: null,
     files: [],
-    path: [''],
+    dirs: [],
+    path: [],
   };
 
   componentDidMount() {
+    // const pathname = this.state.path[0] === '' ? this.state.path.join('/') : this.state.path.join('/') + '/';
     getFiles(this.state.path.join('/'))
       .then(({ data }) => {
+        this.setState({ dirs: data.dirs });
         this.setState({ files: data.files });
       })
       .catch(err => {
@@ -104,34 +108,39 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     this.setState({ open: false });
   };
 
-  handleClickBreadcrumbs = (value: string) => {
-    if (value === 'adri_00@hotmail.fr') this.setState({ path: [''] });
-    getFiles(this.state.path.join('/'))
+  handleClickBreadcrumbs = (index: number) => {
+    let path = this.state.path;
+    // si l'on clique sur la racine du fichier, on réinitialise le tableau
+    if (index + 1 === 0) path = [];
+    // sinon on supprime la ou les cases d'après celle que l'on a cliqué
+    else path = path.slice(0, index + 1);
+
+    const pathname = path.join('/') + '/';
+
+    getFiles(pathname)
       .then(({ data }) => {
-        this.setState({ files: data.files });
+        this.setState(prev => ({ ...prev, files: data.files, dirs: data.dirs, path }));
       })
       .catch(err => {
         console.log(err.response);
       });
   };
 
+  // afficher la navigation dans les dossiers
   showBreadcrumbs = () => {
     const { classes } = this.props;
     const { path } = this.state;
     return (
       <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
-        <Link
-          className={classes.breadcrumb}
-          color='inherit'
-          onClick={() => this.handleClickBreadcrumbs(' adri_00@hotmail.fr')}>
-          adri_00@hotmail.fr
+        <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(-1)}>
+          /
         </Link>
         {path.map((val: string, index: number) => (
           <Link
             key={index.toString()}
             className={classes.breadcrumb}
             color='inherit'
-            onClick={() => this.handleClickBreadcrumbs(val)}>
+            onClick={() => this.handleClickBreadcrumbs(index)}>
             {val}
           </Link>
         ))}
@@ -141,7 +150,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   render() {
     const { classes } = this.props;
-    const { severity, open, message, anchorEl, files } = this.state;
+    const { severity, open, message, anchorEl, files, dirs, path } = this.state;
 
     return (
       <div className={classes.root}>
@@ -199,6 +208,17 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
           <Grid item xs={10}>
             {this.showBreadcrumbs()}
             <Paper className={classes.paper}>
+              {dirs.map((dir, index) => (
+                <div key={index.toString()} className={classes.file}>
+                  <Button
+                    startIcon={<FolderIcon />}
+                    onClick={() => {
+                      this.setState({ path: [...path, dir] });
+                    }}>
+                    {dir}
+                  </Button>
+                </div>
+              ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
                   <Chip label={file} onClick={() => history.push(`/profil/${file}`)} />
