@@ -81,12 +81,12 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
         this.setState({ message: err.response.data.error, severity: 'error', open: true });
       });
   };
-  importFolder = (e: any) => {
+
+  onDropFolder = (files: File[]) => {
     const formData = new FormData();
-    const files = e.target.files;
-    Object.values(files).forEach((file: any) => {
+    files.forEach((file: any) => {
       formData.append('names', String(file.webkitRelativePath));
-      formData.append('myFiles', file, file.webkitRelativePath);
+      formData.append('myFiles', file);
     });
     sendFilesInFolder(formData)
       .then(({ data }) => {
@@ -179,14 +179,6 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
               <MenuItem>
                 <ListItemIcon>
                   <FolderIcon />
-                  <input
-                    type='file'
-                    id='filepicker'
-                    name='fileList'
-                    webkitdirectory=''
-                    directory=''
-                    onChange={this.importFolder}
-                  />
                 </ListItemIcon>
                 <ListItemText primary='Dossier' />
               </MenuItem>
@@ -197,6 +189,16 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                     <div {...getRootProps({ className: 'dropzone' })}>
                       <input {...getInputProps()} />
                       Importer des fichiers
+                    </div>
+                  )}
+                </Dropzone>
+              </MenuItem>
+              <MenuItem>
+                <Dropzone onDrop={this.onDropFolder}>
+                  {({ getRootProps, getInputProps }) => (
+                    <div {...getRootProps({ className: 'dropzone' })}>
+                      <input {...getInputProps()} webkitdirectory='' directory='' />
+                      Importer un dossier
                     </div>
                   )}
                 </Dropzone>
