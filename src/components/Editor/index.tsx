@@ -8,7 +8,8 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import { js_beautify, html_beautify } from 'js-beautify';
-
+import { saveCodeFile } from '../../utils/api';
+import history from '../../history';
 interface P {
   language: string;
   refValue: React.RefObject<any> | undefined;
@@ -42,6 +43,20 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         break;
     }
   };
+  saveCode = () => {
+    console.log(history.location);
+    saveCodeFile({
+      code: this.state.code,
+      language: this.state.langage,
+      path: '',
+    })
+      .then(({ data }) => {
+        console.log(data);
+      })
+      .catch(error => {
+        console.error(error.response);
+      });
+  };
 
   render() {
     const { classes, language, refValue } = this.props;
@@ -49,6 +64,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
     return (
       <div className={classes.root}>
         <button onClick={this.beautify}>Beautify</button>
+        <button onClick={this.saveCode}>Enregistrer</button>
         <ControlledEditor
           ref={refValue}
           onBeforeChange={this.onChange}

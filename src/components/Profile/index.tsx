@@ -41,7 +41,7 @@ interface S {
   anchorEl: null | HTMLElement;
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
-
+//TODO: ajouter les dossiers en paramètre de recherche pour éviter de retourner à la racine quand on revient en arrière
 //TODO: rafraichir le composant pour refaire une requete afin de mettre à jour l'aperçu des fichiers
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
@@ -222,7 +222,10 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
-                  <Chip label={file} onClick={() => history.push(`/profil/${file}`)} />
+                  <Chip
+                    label={file}
+                    onClick={() => history.push({ pathname: `/profil/${file}`, search: `?pathname=${path.join('/')}` })}
+                  />
                 </div>
               ))}
             </Paper>

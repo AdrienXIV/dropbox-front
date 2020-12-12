@@ -46,8 +46,11 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   };
 
   componentDidMount() {
-    console.log(this.props.match.params.file);
-    getFile(this.props.match.params.file).then(({ data }) => {
+    // récupérer le chemin du fichier
+    const pathname = history.location.search.split('pathname=')[1];
+    // récupérer le nom du fichier
+    const filename = this.props.match.params.file;
+    getFile(pathname, filename).then(({ data }) => {
       if (!data.isCode) {
         this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
       } else {
@@ -84,7 +87,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   render() {
     const { classes } = this.props;
     const { severity, open, message, anchorEl, file, isCode, language } = this.state;
-
+    console.log(history);
     return (
       <div className={classes.root}>
         <Snackbar
