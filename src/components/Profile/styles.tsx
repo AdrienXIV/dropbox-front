@@ -1,10 +1,20 @@
 import { createStyles, Theme } from '@material-ui/core';
-export type Styles = 'root' | 'menu' | 'breadcrumb' | 'file' | 'paper' | 'base' | 'active' | 'accept' | 'reject' | 'files' | 'button'; // add class create
+export type Styles =
+  | 'root'
+  | 'menu'
+  | 'breadcrumb'
+  | 'file'
+  | 'paper'
+  | 'base'
+  | 'active'
+  | 'accept'
+  | 'reject'
+  | 'files'
+  | 'button'; // add class create
 
 const styles = (theme: Theme) =>
   createStyles({
     root: {
-      flexGrow: 1,
       padding: 15,
     },
     paper: {
