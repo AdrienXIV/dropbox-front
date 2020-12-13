@@ -20,7 +20,11 @@ import { StyledMenu } from '../Home/styles';
 import Editor from '../Editor';
 import history from '../../history';
 interface P {
-  match: any;
+  match: {
+    params: {
+      file: string;
+    };
+  };
 }
 interface S {
   file: string;
@@ -85,7 +89,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, match } = this.props;
     const { severity, open, message, anchorEl, file, isCode, language } = this.state;
     console.log(history);
     return (
@@ -134,7 +138,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
           <Grid item xs={10}>
             <Paper className={classes.paper}>
               {isCode ? (
-                <Editor.Display refValue={undefined} value={file} language={language} />
+                <Editor.Display refValue={undefined} value={file} language={language} filename={match.params.file} />
               ) : (
                 <iframe src={file} height='100%' width='100%' />
               )}

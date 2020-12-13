@@ -33,6 +33,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
     try {
       const { data } = await login(this.state);
       setCookie('token', data.token, 1);
+      setCookie('email', this.state.email, 1);
       // ajout du token dans les requetes http
       axios.defaults.headers = {
         authorization: `Baerer ${data.token}`,

@@ -22,6 +22,7 @@ import styles, { Styles } from './styles';
 import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import history from '../../history';
+import { getCookie } from '../../utils/cookie';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -41,7 +42,6 @@ interface S {
   anchorEl: null | HTMLElement;
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
-//TODO: ajouter les dossiers en paramètre de recherche pour éviter de retourner à la racine quand on revient en arrière
 //TODO: rafraichir le composant pour refaire une requete afin de mettre à jour l'aperçu des fichiers
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
@@ -147,7 +147,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     return (
       <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
         <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(-1)}>
-          /
+          {`${getCookie('email') || '/'}`}
         </Link>
         {path.map((val: string, index: number) => (
           <Link
