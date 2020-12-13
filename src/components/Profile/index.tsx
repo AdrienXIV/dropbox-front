@@ -56,8 +56,22 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   };
 
   componentDidMount() {
-    // const pathname = this.state.path[0] === '' ? this.state.path.join('/') : this.state.path.join('/') + '/';
-    getFiles(this.state.path.join('/'))
+    let pathname = '';
+    // si la variable de session existe, on l'utilise pour faire la requête afin de ne pas repartir de 0
+    if (sessionStorage.getItem('pathname')) {
+      const path = sessionStorage.getItem('pathname')?.split('/') as string[];
+      // éviter d'avoir une chaîne vide à la fin
+      path.pop();
+      // faire la requête => /path/to + /
+      pathname = path.join('/') + '/';
+      // mise à jour du chemin
+      this.setState({ path });
+    } else {
+      // sinon on prend le chemon vide initialisé
+      pathname = this.state.path.join('/');
+    }
+
+    getFiles(pathname)
       .then(({ data }) => {
         this.setState({ dirs: data.dirs });
         this.setState({ files: data.files });
@@ -116,7 +130,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     else path = path.slice(0, index + 1);
 
     const pathname = path.join('/') + '/';
-
+    sessionStorage.setItem('pathname', pathname);
     getFiles(pathname)
       .then(({ data }) => {
         this.setState(prev => ({ ...prev, files: data.files, dirs: data.dirs, path }));
