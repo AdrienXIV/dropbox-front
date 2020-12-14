@@ -6,7 +6,6 @@ import {
   TextField,
   Card,
   CardContent,
-  Typography,
   withStyles,
   WithStyles,
 } from '@material-ui/core';
