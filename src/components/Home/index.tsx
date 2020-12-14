@@ -36,7 +36,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
       axios.defaults.headers = {
         authorization: `Baerer ${data.token}`,
       };
-      history.push('/profil');
+      history.push('/tableau-de-bord');
     } catch (error) {
       console.error(error);
     }
@@ -91,8 +91,8 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>
-                <Button type='submit' variant='contained'>brew 
-                  Se connecter
+                <Button type='submit' variant='contained'>
+                  brew Se connecter
                 </Button>
               </div>
             </form>
