@@ -33,8 +33,8 @@ function App(): JSX.Element {
           <Route exact path='/inscription' component={Register.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/tableau-de-bord' component={Dashboard.Display} />
-          <ProtectedRoute exact path='/profil/modifier' component={ModifierProfil.Display} />
-          <ProtectedRoute exact path='/profil/:file' component={File.Display} />
+          <ProtectedRoute exact path='/tableau-de-bord/:file' component={File.Display} />
+          <ProtectedRoute exact path='/profil' component={ModifierProfil.Display} />
         </Switch>
       </Router>
     </div>
