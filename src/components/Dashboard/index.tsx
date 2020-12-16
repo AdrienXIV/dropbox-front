@@ -237,10 +237,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
-                  <Chip
-                    label={file}
-                    onClick={() => history.push({ pathname: `/profil/${file}`, search: `?pathname=${path.join('/')}` })}
-                  />
+                  <Chip label={file} onClick={() => history.push(`/tableau-de-bord/${file}`)} />
                 </div>
               ))}
             </Paper>
