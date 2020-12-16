@@ -12,6 +12,7 @@ export type Styles =
   | 'inputRoot'
   | 'inputInput'
   | 'sectionDesktop'
+  | 'btnProfil'
   | 'sectionMobile'; // add class create
 const styles = (theme: Theme) =>
   createStyles({
@@ -89,6 +90,12 @@ const styles = (theme: Theme) =>
     signout: {
       width: '100%',
       textAlign: 'end',
+      '&>button': {
+        color: 'white',
+      },
+    },
+    btnProfil: {
+      width: '100%',
       '&>button': {
         color: 'white',
       },
