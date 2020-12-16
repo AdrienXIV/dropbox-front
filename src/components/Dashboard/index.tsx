@@ -222,7 +222,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
-                  <Chip label={file} onClick={() => history.push(`/profil/${file}`)} />
+                  <Chip label={file} onClick={() => history.push(`/tablau-de-bord/${file}`)} />
                 </div>
               ))}
             </Paper>
