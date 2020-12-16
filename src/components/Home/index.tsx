@@ -59,7 +59,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
   };
   render() {
     const { classes } = this.props;
-    if (getCookie('token')) return <Redirect to='/profil' />;
+    if (getCookie('token')) return <Redirect to='/tableau-de-bord' />;
     const { severity, message, open } = this.state;
     return (
       <Container maxWidth='lg' className={classes.container}>
