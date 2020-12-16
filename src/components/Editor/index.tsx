@@ -7,7 +7,8 @@ import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
-import { js_beautify, html_beautify } from 'js-beautify';
+import { js_beautify, html_beautify,css_beautify } from 'js-beautify';
+import beautify from 'beautify';
 import { saveCodeFile } from '../../utils/api';
 import history from '../../history';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
@@ -43,7 +44,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   beautify = () => {
     switch (this.state.langage) {
       case 'xml':
-        this.setState({ code: html_beautify(this.state.code, { indent_size: 2 }) });
+        this.setState({ code: beautify(this.state.code, { format: 'html' }) });
         break;
       default:
         break;
