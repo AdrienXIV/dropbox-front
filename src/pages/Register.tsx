@@ -78,7 +78,6 @@ handleClose = () => {
     const {severity, message, open} = this.state;
 
     return (
-      <Grid container={true} >
         <Container maxWidth='lg' className={classes.container}>
         <Snackbar anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }} autoHideDuration={6000} open={open} onClose={this.handleClose}>
           <Alert onClose={this.handleClose} severity={severity}>
@@ -97,7 +96,12 @@ handleClose = () => {
                       <AlternateEmailIcon />
                     </Grid>
                     <Grid item>
-                      <TextField name="email" label='Courriel' type='email' value={this.state.email} onChange={this.handleChange} />
+                      <TextField
+                      name="email"
+                      label='Courriel'
+                      type='email'
+                      value={this.state.email}
+                      onChange={this.handleChange} />
                     </Grid>
                   </Grid>
                 </div>
@@ -107,7 +111,12 @@ handleClose = () => {
                       <AccountBoxIcon />
                     </Grid>
                     <Grid item>
-                      <TextField name="username" label="Nom d'utilisateur" type='text' value={this.state.username} onChange={this.handleChange} />
+                      <TextField 
+                      name="username"
+                      label="Nom d'utilisateur" 
+                      type='text' 
+                      value={this.state.username}
+                      onChange={this.handleChange} />
                     </Grid>
                   </Grid>
                 </div>
@@ -117,7 +126,12 @@ handleClose = () => {
                       <VpnKeyIcon />
                     </Grid>
                     <Grid item>
-                      <TextField name="password" label='password' type='password' value={this.state.password} onChange={this.handleChange} />
+                      <TextField 
+                      name="password" 
+                      label='password' 
+                      type='password' 
+                      value={this.state.password} 
+                      onChange={this.handleChange} />
                     </Grid>
                   </Grid>
                 </div>
@@ -127,7 +141,12 @@ handleClose = () => {
                       <VpnKeyIcon />
                     </Grid>
                     <Grid item>
-                      <TextField name="confirm" label='Confirmer password' type='password'  value={this.state.confirm} onChange={this.handleChange} />
+                      <TextField 
+                      name="confirm" 
+                      label='Confirmer password' 
+                      type='password'  
+                      value={this.state.confirm} 
+                      onChange={this.handleChange} />
                     </Grid>
                   </Grid>
                 </div>
@@ -140,7 +159,6 @@ handleClose = () => {
             </CardContent>
           </Card>
         </Container>
-      </Grid>
     );
   }
 }
