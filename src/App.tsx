@@ -4,7 +4,7 @@ import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/Register';
 import ModifierProfil from './pages/ModifyProfil';
 import Home from './components/Home';
-import File from './components/File';
+import ShowFile from './components/File';
 import history from './history';
 import Dashboard from './components/Dashboard';
 import { HeaderBar } from './components/HeaderBar';
@@ -33,7 +33,7 @@ function App(): JSX.Element {
           <Route exact path='/inscription' component={Register.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/tableau-de-bord' component={Dashboard.Display} />
-          <ProtectedRoute exact path='/tableau-de-bord/:file' component={File.Display} />
+          <ProtectedRoute exact path='/tableau-de-bord/:file' component={ShowFile.Display} />
           <ProtectedRoute exact path='/profil' component={ModifierProfil.Display} />
         </Switch>
       </Router>

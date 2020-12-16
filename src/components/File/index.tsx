@@ -18,7 +18,7 @@ import styles, { Styles } from './styles';
 import { sendFiles, getFile } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import Editor from '../Editor';
-import history from '../../history';
+
 interface P {
   match: any;
 }
@@ -33,8 +33,8 @@ interface S {
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
 
-export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
-  public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
+export default class ShowFile extends React.Component<P & WithStyles<Styles>, S> {
+  public static Display = withStyles(styles as any)(ShowFile) as React.ComponentType<P>;
   public state: Readonly<S> = {
     message: '',
     open: false,
@@ -84,7 +84,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   render() {
     const { classes } = this.props;
     const { severity, open, message, anchorEl, file, isCode, language } = this.state;
-
+    console.log('test');
     return (
       <div className={classes.root}>
         <Snackbar
