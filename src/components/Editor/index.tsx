@@ -51,7 +51,8 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   };
   saveCode = () => {
     console.log(this.props.filename);
-    const path = history.location.search.split('pathname=')[1];
+    const path = sessionStorage.getItem('pathname') ? (sessionStorage.getItem('pathname') as string) : '';
+
     saveCodeFile({
       code: this.state.code,
       language: this.state.langage,
