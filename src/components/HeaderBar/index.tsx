@@ -6,6 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import { withStyles, WithStyles } from '@material-ui/core';
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import styles, { Styles } from './styles';
 import history from '../../history';
 import { setCookie } from '../../utils/cookie';
@@ -30,7 +31,9 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant='h6' noWrap>
-              Dropbox-IMIE
+            <div className={classes.btnProfil}>
+            <Button startIcon={<AccountBoxIcon/>} onClick={()=>history.push('/profil')}>Voir mon profil</Button>
+            </div>
             </Typography>
 
             <div className={classes.signout}>

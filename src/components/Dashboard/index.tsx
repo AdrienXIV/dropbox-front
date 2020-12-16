@@ -208,20 +208,21 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
           <Grid item xs={10}>
             {this.showBreadcrumbs()}
             <Paper className={classes.paper}>
-              {dirs.map((dir, index) => (
-                <div key={index.toString()} className={classes.file}>
-                  <Button
-                    startIcon={<FolderIcon />}
-                    onClick={() => {
-                      this.setState({ path: [...path, dir] });
-                    }}>
-                    {dir}
-                  </Button>
-                </div>
-              ))}
+              {dirs &&
+                dirs.map((dir, index) => (
+                  <div key={index.toString()} className={classes.file}>
+                    <Button
+                      startIcon={<FolderIcon />}
+                      onClick={() => {
+                        this.setState({ path: [...path, dir] });
+                      }}>
+                      {dir}
+                    </Button>
+                  </div>
+                ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
-                  <Chip label={file} onClick={() => history.push(`/profil/${file}`)} />
+                  <Chip label={file} onClick={() => history.push(`/tableau-de-bord/${file}`)} />
                 </div>
               ))}
             </Paper>

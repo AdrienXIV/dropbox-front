@@ -6,6 +6,10 @@ import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
 import { register } from "../utils/api";
 import history from '../history'
+import { setCookie } from '../utils/cookie';
+import axios from 'axios';
+
+
 interface P { }
 interface S {
 email:string;
@@ -30,29 +34,43 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
     e.preventDefault()
     try {
       const { data } = await register(this.state);
-      localStorage.setItem("token", JSON.stringify(data.token));
-      history.push('/')
+      setCookie('token', data.token, 1);
+      // ajout du token dans les requetes http
+      axios.defaults.headers = {
+        authorization: `Baerer ${data.token}`,
+      };
+      history.push('/tableau-de-bord');
     } catch (error) {
       console.error(error);
     }
   }
   handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    this.setState(prevState =>({
+  /* this.setState(prevState =>({
       ...prevState,
     [e.target.name]:e.target.value
-  })
+  }))
 
-    /*const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
+    const regex = new RegExp('/^(?=.*[A-Za-z])(?=.*)(?=.*[@$!%*#?&])[A-Za-z@$!%*#?&]{8,}$/');
     if(!regex.test(this.state.password))
     {
-      this.setState(prevState =>({
-        ...prevState,
-        [e.target.password]: e.target.password
-      }));
-  }else{
+      this.setState = {  }
+    }else{
     console.error('mot de passe manquant');
   }*/
-)}
+}
+/*handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  e.preventDefault();
+  try {
+    const { data } = await register(this.state);
+    // ajout du token dans les requetes http
+    //axios.defaults.headers = {
+      authorization: `Baerer ${data.token}`,
+    };
+    history.push('/tableau-de-bord');
+  } catch (error) {
+    console.error(error);
+  }
+};*/
 
   render() {
     const { classes } = this.props;
@@ -64,7 +82,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
               <Typography component='h5' variant='h5' align='center'>
                 Inscription
             </Typography>
-              <form className={classes.form} noValidate autoComplete='off'>
+              <form className={classes.form} noValidate autoComplete='off' >
                 <div className={classes.margin}>
                   <Grid container spacing={1} alignItems='flex-end'>
                     <Grid item>

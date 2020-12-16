@@ -21,7 +21,18 @@ export const getFiles = (path: string) => {
 export const getFile = (fileName: string) => {
   return axios.get(`/share/files/${fileName}`);
 };
-
+/**
+ * get
+ */
+export const getprofil = () => {
+  return axios.get(`/user/getprofil`);
+};
+/**
+ * POST
+ */
+export const updateprofil = (data: any) => {
+  return axios.post(`/user/editprofil`, data);
+};
 /**
  * POST
  */
