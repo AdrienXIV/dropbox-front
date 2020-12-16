@@ -52,9 +52,11 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
 
   componentDidMount() {
     // récupérer le chemin du fichier
-    const pathname = history.location.search.split('pathname=')[1];
+    const pathname = sessionStorage.getItem('pathname') ? (sessionStorage.getItem('pathname') as string) : '';
+    console.log('pathname: ', pathname);
     // récupérer le nom du fichier
     const filename = this.props.match.params.file;
+    console.log('filename: ', filename);
     getFile(pathname, filename).then(({ data }) => {
       if (!data.isCode) {
         this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });

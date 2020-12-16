@@ -150,15 +150,17 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
         <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(-1)}>
           {`${getCookie('email') || '/'}`}
         </Link>
-        {path.map((val: string, index: number) => (
-          <Link
-            key={index.toString()}
-            className={classes.breadcrumb}
-            color='inherit'
-            onClick={() => this.handleClickBreadcrumbs(index)}>
-            {val}
-          </Link>
-        ))}
+        {path.map((val: string, index: number) => {
+          return val !== '' ? (
+            <Link
+              key={index.toString()}
+              className={classes.breadcrumb}
+              color='inherit'
+              onClick={() => this.handleClickBreadcrumbs(index)}>
+              {val}
+            </Link>
+          ) : null;
+        })}
       </Breadcrumbs>
     );
   };
