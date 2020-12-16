@@ -18,9 +18,14 @@ import styles, { Styles } from './styles';
 import { sendFiles, getFile } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import Editor from '../Editor';
+import history from '../../history';
 
 interface P {
-  match: any;
+  match: {
+    params: {
+      file: string;
+    };
+  };
 }
 interface S {
   file: string;
@@ -46,8 +51,11 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
   };
 
   componentDidMount() {
-    console.log(this.props.match.params.file);
-    getFile(this.props.match.params.file).then(({ data }) => {
+    // récupérer le chemin du fichier
+    const pathname = history.location.search.split('pathname=')[1];
+    // récupérer le nom du fichier
+    const filename = this.props.match.params.file;
+    getFile(pathname, filename).then(({ data }) => {
       if (!data.isCode) {
         this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
       } else {
@@ -82,9 +90,9 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, match } = this.props;
     const { severity, open, message, anchorEl, file, isCode, language } = this.state;
-    console.log('test');
+    console.log(history);
     return (
       <div className={classes.root}>
         <Snackbar
@@ -131,7 +139,7 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
           <Grid item xs={10}>
             <Paper className={classes.paper}>
               {isCode ? (
-                <Editor.Display refValue={undefined} value={file} language={language} />
+                <Editor.Display refValue={undefined} value={file} language={language} filename={match.params.file} />
               ) : (
                 <iframe src={file} height='100%' width='100%' />
               )}

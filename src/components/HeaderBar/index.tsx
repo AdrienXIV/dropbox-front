@@ -18,6 +18,8 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
   public static Display = withStyles(styles as any)(HeaderBar) as React.ComponentType<P>;
   disconnect = () => {
     setCookie('token', '', 0);
+    setCookie('email', '', 0);
+    sessionStorage.clear();
     history.push('/');
   };
 

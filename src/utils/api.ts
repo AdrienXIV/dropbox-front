@@ -18,8 +18,12 @@ export const getFiles = (path: string) => {
   });
 };
 
-export const getFile = (fileName: string) => {
-  return axios.get(`/share/files/${fileName}`);
+export const getFile = (pathname: string, fileName: string) => {
+  return axios.get(`/share/files/${fileName}`, {
+    params: {
+      pathname,
+    },
+  });
 };
 /**
  * get
@@ -49,6 +53,10 @@ export const sendFiles = (data: any) => {
 
 export const sendFilesInFolder = (data: any) => {
   return axios.post('/share/new-folder', data);
+};
+
+export const saveCodeFile = (data: { code: string; language: string; path: string }) => {
+  return axios.post('/share/save-code-file', data);
 };
 /**
  * PATCH
