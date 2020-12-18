@@ -1,22 +1,7 @@
 import React from 'react';
-import {
-  Grid,
-  Paper,
-  Button,
-  Snackbar,
-  withStyles,
-  WithStyles,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-} from '@material-ui/core';
+import { Grid, Paper, Snackbar, withStyles, WithStyles } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
-import AddIcon from '@material-ui/icons/Add';
-import FolderIcon from '@material-ui/icons/Folder';
-import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
-import { sendFiles, getFile } from '../../utils/api';
-import { StyledMenu } from '../Home/styles';
 import Editor from '../Editor';
 import history from '../../history';
 
