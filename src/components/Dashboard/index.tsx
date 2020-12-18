@@ -38,8 +38,6 @@ interface S {
   anchorEl: null | HTMLElement;
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
-//TODO: séparer le composant "showBreadcrumbs" pour afficher le menu de navigation dans les dossiers du dropbox partout
-//TODO: rafraichir le composant pour refaire une requete afin de mettre à jour l'aperçu des fichiers
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
   public state: Readonly<S> = {
