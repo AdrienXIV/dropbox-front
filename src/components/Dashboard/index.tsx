@@ -23,6 +23,7 @@ import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import history from '../../history';
 import { getCookie } from '../../utils/cookie';
+import FolderNavigation from '../FolderNavigation';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -141,30 +142,6 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
       });
   };
 
-  // afficher la navigation dans les dossiers
-  showBreadcrumbs = () => {
-    const { classes } = this.props;
-    const { path } = this.state;
-    return (
-      <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
-        <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(-1)}>
-          {`${getCookie('email') || '/'}`}
-        </Link>
-        {path.map((val: string, index: number) => {
-          return val !== '' ? (
-            <Link
-              key={index.toString()}
-              className={classes.breadcrumb}
-              color='inherit'
-              onClick={() => this.handleClickBreadcrumbs(index)}>
-              {val}
-            </Link>
-          ) : null;
-        })}
-      </Breadcrumbs>
-    );
-  };
-
   render() {
     const { classes } = this.props;
     const { severity, open, message, anchorEl, files, dirs, path } = this.state;
@@ -223,7 +200,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
             </StyledMenu>
           </Grid>
           <Grid item xs={10}>
-            {this.showBreadcrumbs()}
+            <FolderNavigation.Display path={path} handleClickBreadcrumbs={this.handleClickBreadcrumbs} />
             <Paper className={classes.paper}>
               {dirs &&
                 dirs.map((dir, index) => (
