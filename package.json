@@ -15,6 +15,7 @@
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
     "axios": "^0.21.0",
+    "beautify": "^0.0.8",
     "codemirror": "^5.58.3",
     "js-beautify": "^1.13.0",
     "mammoth": "^1.4.14",
@@ -29,6 +30,7 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "@types/beautify": "^0.0.0",
     "@types/js-beautify": "^1.13.1",
     "@types/react-router-dom": "^5.1.6",
     "eslint": "^7.13.0",

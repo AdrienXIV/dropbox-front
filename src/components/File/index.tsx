@@ -61,7 +61,8 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
       if (!data.isCode) {
         this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
       } else {
-        this.setState({ file: data.file, isCode: true, language: 'xml' });
+        const language = data.ext ==='html'?'xml' : data.ext 
+        this.setState({ file: data.file, isCode: true, language });
       }
     });
   }
