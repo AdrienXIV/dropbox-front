@@ -32,10 +32,10 @@ export const getprofil = () => {
   return axios.get(`/user/getprofil`);
 };
 /**
- * POST
+ * PUT
  */
 export const updateprofil = (data: any) => {
-  return axios.post(`/user/editprofil`, data);
+  return axios.put(`/user/editprofil`, data);
 };
 /**
  * POST
@@ -46,7 +46,9 @@ export const register = (data: any) => {
 export const login = (data: any) => {
   return axios.post(`/auth/login`, data);
 };
-
+export const forgetPassword = (email: string) => {
+  return axios.post(`/auth/forgot-password`, {email});
+};
 export const sendFiles = (data: any) => {
   return axios.post('/share/new-files', data);
 };
@@ -61,6 +63,9 @@ export const saveCodeFile = (data: { code: string; language: string; path: strin
 /**
  * PATCH
  */
+export const resetPassword= (data: any) => {
+  return axios.patch(`/auth/reset-password`, data);
+};
 
 /**
  * DELETE
