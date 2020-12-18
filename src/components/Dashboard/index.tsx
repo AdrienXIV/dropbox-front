@@ -104,6 +104,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     sendFiles(formData)
       .then(({ data }) => {
         this.setState({ message: data.message, severity: 'success', open: true });
+        this.getAllFilesWithCurrentPathname();
       })
       .catch(err => {
         console.log(err.response);
@@ -120,6 +121,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     sendFilesInFolder(formData)
       .then(({ data }) => {
         this.setState({ message: data.message, severity: 'success', open: true });
+        this.getAllFilesWithCurrentPathname();
       })
       .catch(err => {
         console.log(err.response);
