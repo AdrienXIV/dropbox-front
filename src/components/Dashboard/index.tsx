@@ -58,6 +58,25 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   };
 
   componentDidMount() {
+    this.getAllFilesWithCurrentPathname();
+  }
+  componentDidUpdate() {
+    const pathname = this.state.path.join('/') + '/';
+    // si on clique sur un dossier on fait la coparaison avec le chemin en session afin de faire une requête pour mettre à jour
+    // le contenu
+    if (pathname !== sessionStorage.getItem('pathname')) {
+      getFiles(pathname)
+        .then(({ data }) => {
+          this.setState(prev => ({ ...prev, dirs: data.dirs, files: data.files }));
+          sessionStorage.setItem('pathname', pathname);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    }
+  }
+
+  getAllFilesWithCurrentPathname() {
     let pathname = '';
     // si la variable de session existe, on l'utilise pour faire la requête afin de ne pas repartir de 0
     if (sessionStorage.getItem('pathname')) {
@@ -67,16 +86,15 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
       // faire la requête => /path/to + /
       pathname = path.join('/') + '/';
       // mise à jour du chemin
-      this.setState({ path });
+      this.setState(prev => ({ ...prev, path }));
     } else {
-      // sinon on prend le chemon vide initialisé
+      // sinon on prend le chemin vide initialisé
       pathname = this.state.path.join('/');
     }
 
     getFiles(pathname)
       .then(({ data }) => {
-        this.setState({ dirs: data.dirs });
-        this.setState({ files: data.files });
+        this.setState(prev => ({ ...prev, dirs: data.dirs, files: data.files }));
       })
       .catch(err => {
         console.log(err.response);
@@ -133,13 +151,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
     const pathname = path.join('/') + '/';
     sessionStorage.setItem('pathname', pathname);
-    getFiles(pathname)
-      .then(({ data }) => {
-        this.setState(prev => ({ ...prev, files: data.files, dirs: data.dirs, path }));
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
+    this.getAllFilesWithCurrentPathname();
   };
 
   render() {
