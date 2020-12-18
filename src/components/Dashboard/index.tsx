@@ -186,7 +186,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
               aria-controls='simple-menu'
               aria-haspopup='true'
               startIcon={<AddIcon />}
-              color='primary'
+              style={{ backgroundColor: '#2c3e50', color: 'white' }}
               variant='contained'
               className={classes.button}
               onClick={this.handleClickMenu}>
