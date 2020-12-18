@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid, Paper, Snackbar, withStyles, WithStyles } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import styles, { Styles } from './styles';
+import { getFile } from '../../utils/api';
 import Editor from '../Editor';
 import history from '../../history';
 
