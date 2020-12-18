@@ -53,35 +53,18 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
   componentDidMount() {
     // récupérer le chemin du fichier
     const pathname = sessionStorage.getItem('pathname') ? (sessionStorage.getItem('pathname') as string) : '';
-    console.log('pathname: ', pathname);
     // récupérer le nom du fichier
     const filename = this.props.match.params.file;
-    console.log('filename: ', filename);
     getFile(pathname, filename).then(({ data }) => {
       if (!data.isCode) {
         this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
       } else {
-        const language = data.ext ==='html'?'xml' : data.ext 
+        const language = data.ext === 'html' ? 'xml' : data.ext;
         this.setState({ file: data.file, isCode: true, language });
       }
     });
   }
 
-  onDrop = (files: File[]) => {
-    const formData = new FormData();
-    files.forEach(file => {
-      // si le fichier exise déjà, on ne l'ajoute pas
-      formData.append('myFiles', file);
-    });
-    sendFiles(formData)
-      .then(({ data }) => {
-        this.setState({ message: data.message, severity: 'success', open: true });
-      })
-      .catch(err => {
-        console.log(err.response);
-        this.setState({ message: err.response.data.error, severity: 'error', open: true });
-      });
-  };
   handleClickMenu = (event: React.MouseEvent<HTMLElement>) => {
     this.setState({ anchorEl: event.currentTarget });
   };
@@ -94,7 +77,7 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
 
   render() {
     const { classes, match } = this.props;
-    const { severity, open, message, anchorEl, file, isCode, language } = this.state;
+    const { severity, open, message, file, isCode, language } = this.state;
     console.log(history);
     return (
       <div className={classes.root}>
@@ -108,38 +91,7 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
           </Alert>
         </Snackbar>
         <Grid container justify='center'>
-          <Grid item xs={2}>
-            <Button
-              aria-controls='simple-menu'
-              aria-haspopup='true'
-              startIcon={<AddIcon />}
-              color='primary'
-              variant='contained'
-              className={classes.button}
-              onClick={this.handleClickMenu}>
-              Nouveau
-            </Button>
-            <StyledMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleCloseMenu}>
-              <MenuItem>
-                <ListItemIcon>
-                  <FolderIcon />
-                </ListItemIcon>
-                <ListItemText primary='Dossier' />
-              </MenuItem>
-              <div style={{ height: 1, backgroundColor: 'silver' }} />
-              <MenuItem>
-                <Dropzone onDrop={this.onDrop}>
-                  {({ getRootProps, getInputProps }) => (
-                    <div {...getRootProps({ className: 'dropzone' })}>
-                      <input {...getInputProps()} />
-                      Importer des fichiers
-                    </div>
-                  )}
-                </Dropzone>
-              </MenuItem>
-            </StyledMenu>
-          </Grid>
-          <Grid item xs={10}>
+          <Grid item xs={12}>
             <Paper className={classes.paper}>
               {isCode ? (
                 <Editor.Display refValue={undefined} value={file} language={language} filename={match.params.file} />
