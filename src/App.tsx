@@ -3,6 +3,9 @@ import './App.css';
 import { Router, Route, Switch, Redirect } from 'react-router-dom';
 import Register from './pages/Register';
 import ModifierProfil from './pages/ModifyProfil';
+import Reinitialiser from './pages/ReinitialiserPassword';
+import RecuperationEmail from './pages/RecuperationEmail';
+
 import Home from './components/Home';
 import File from './components/File';
 import history from './history';
@@ -31,6 +34,8 @@ function App(): JSX.Element {
         <Switch>
           <Route exact path='/' component={Home.Display} />
           <Route exact path='/inscription' component={Register.Display} />
+          <Route exact path='/recuperation-mot-de-passe' component={RecuperationEmail.Display} />
+          <Route exact path='/reinitialiser-mot-de-passe/:str' component={Reinitialiser.Display} />
           {/* ROUTES NECESSITANT D'ETRE CONNECTE */}
           <ProtectedRoute exact path='/tableau-de-bord' component={Dashboard.Display} />
           <ProtectedRoute exact path='/tableau-de-bord/:file' component={File.Display} />
