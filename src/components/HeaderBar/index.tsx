@@ -33,9 +33,11 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
               <MenuIcon />
             </IconButton>
             <Typography className={classes.title} variant='h6' noWrap>
-            <div className={classes.btnProfil}>
-            <Button startIcon={<AccountBoxIcon/>} onClick={()=>history.push('/profil')}>Voir mon profil</Button>
-            </div>
+              <div className={classes.btnProfil}>
+                <Button startIcon={<AccountBoxIcon />} onClick={() => history.push('/profil')}>
+                  Voir mon profil
+                </Button>
+              </div>
             </Typography>
 
             <div className={classes.signout}>

@@ -1,7 +1,6 @@
 import { createStyles, Theme, fade } from '@material-ui/core';
 
 export type Styles =
-  | 'headerBar'
   | 'grow'
   | 'signout'
   | 'menuButton'
@@ -16,17 +15,11 @@ export type Styles =
   | 'sectionMobile'; // add class create
 const styles = (theme: Theme) =>
   createStyles({
-    headerBar: {
-      flex: 1,
-      display: 'flex',
-      padding: '0 24px',
-      minHeight: '64px',
-      alignItems: 'center',
-      backgroundColor: '#fff',
-      justifyContent: 'space-between',
-    },
     grow: {
       flexGrow: 1,
+      '&>header>div': {
+        backgroundColor: '#2c3e50',
+      },
     },
     menuButton: {
       marginRight: theme.spacing(2),
