@@ -6,23 +6,18 @@ import {
   Snackbar,
   withStyles,
   WithStyles,
-  Breadcrumbs,
   MenuItem,
   ListItemIcon,
   ListItemText,
   Chip,
-  Link,
 } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
 import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
-import history from '../../history';
-import { getCookie } from '../../utils/cookie';
 import FolderNavigation from '../FolderNavigation';
 
 declare module 'react' {
