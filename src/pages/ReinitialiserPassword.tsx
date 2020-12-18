@@ -8,12 +8,10 @@ import {
   CardContent,
   withStyles,
   WithStyles,
-  Snackbar,
   Typography,
 } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import styles, { Styles } from './styles';
-import { forgetPassword } from "../utils/api";
 import { resetPassword } from "../utils/api";
 
 import history from '../history';

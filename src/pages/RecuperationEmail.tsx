@@ -14,8 +14,6 @@ import {
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
 import { forgetPassword } from "../utils/api";
-
-import history from '../history';
 import { Alert, AlertProps } from '@material-ui/lab';
 
 interface P {}
