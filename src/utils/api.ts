@@ -47,7 +47,7 @@ export const login = (data: any) => {
   return axios.post(`/auth/login`, data);
 };
 export const forgetPassword = (email: string) => {
-  return axios.post(`/auth/forgot-password`, {email});
+  return axios.post(`/auth/forgot-password`, { email });
 };
 export const sendFiles = (data: any) => {
   return axios.post('/share/new-files', data);
@@ -63,10 +63,13 @@ export const saveCodeFile = (data: { code: string; language: string; path: strin
 /**
  * PATCH
  */
-export const resetPassword= (data: any) => {
+export const resetPassword = (data: any) => {
   return axios.patch(`/auth/reset-password`, data);
 };
 
 /**
  * DELETE
  */
+export const removeProfile = () => {
+  return axios.delete('/user/profile');
+};
