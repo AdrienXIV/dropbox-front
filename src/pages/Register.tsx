@@ -67,10 +67,10 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
     e.preventDefault();
     const pass = this.state.password;
     try {
-      // if(!/^.(?=.{8,})(?=.[a-zA-Z])(?=.\d)(?=.[!#$%&? "]).*$/.test(pass))
-      // {
-      //   console.log('votre mot de pass doit contenir au moins .... ')
-      // }else{
+      if(!/^.(?=.{8,})(?=.[a-zA-Z])(?=.\d)(?=.[!#$%&? "]).*$/.test(pass))
+      {
+        console.log('votre mot de pass doit contenir au moins .... ')
+      }else{
 
       const { data } = await register(this.state);
       setCookie('token', data.token, 1);
