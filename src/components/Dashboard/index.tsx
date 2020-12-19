@@ -6,23 +6,19 @@ import {
   Snackbar,
   withStyles,
   WithStyles,
-  Breadcrumbs,
   MenuItem,
   ListItemIcon,
   ListItemText,
   Chip,
-  Link,
 } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
 import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
-import history from '../../history';
-import { getCookie } from '../../utils/cookie';
+import FolderNavigation from '../FolderNavigation';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -42,8 +38,6 @@ interface S {
   anchorEl: null | HTMLElement;
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
-//TODO: séparer le composant "showBreadcrumbs" pour afficher le menu de navigation dans les dossiers du dropbox partout
-//TODO: rafraichir le composant pour refaire une requete afin de mettre à jour l'aperçu des fichiers
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
   public state: Readonly<S> = {
@@ -57,6 +51,25 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   };
 
   componentDidMount() {
+    this.getAllFilesWithCurrentPathname();
+  }
+  componentDidUpdate() {
+    const pathname = this.state.path.join('/') + '/';
+    // si on clique sur un dossier on fait la coparaison avec le chemin en session afin de faire une requête pour mettre à jour
+    // le contenu
+    if (pathname !== sessionStorage.getItem('pathname')) {
+      getFiles(pathname)
+        .then(({ data }) => {
+          this.setState(prev => ({ ...prev, dirs: data.dirs, files: data.files }));
+          sessionStorage.setItem('pathname', pathname);
+        })
+        .catch(err => {
+          console.log(err.response);
+        });
+    }
+  }
+
+  getAllFilesWithCurrentPathname() {
     let pathname = '';
     // si la variable de session existe, on l'utilise pour faire la requête afin de ne pas repartir de 0
     if (sessionStorage.getItem('pathname')) {
@@ -66,16 +79,15 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
       // faire la requête => /path/to + /
       pathname = path.join('/') + '/';
       // mise à jour du chemin
-      this.setState({ path });
+      this.setState(prev => ({ ...prev, path }));
     } else {
-      // sinon on prend le chemon vide initialisé
+      // sinon on prend le chemin vide initialisé
       pathname = this.state.path.join('/');
     }
 
     getFiles(pathname)
       .then(({ data }) => {
-        this.setState({ dirs: data.dirs });
-        this.setState({ files: data.files });
+        this.setState(prev => ({ ...prev, dirs: data.dirs, files: data.files }));
       })
       .catch(err => {
         console.log(err.response);
@@ -90,6 +102,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     sendFiles(formData)
       .then(({ data }) => {
         this.setState({ message: data.message, severity: 'success', open: true });
+        this.getAllFilesWithCurrentPathname();
       })
       .catch(err => {
         console.log(err.response);
@@ -106,6 +119,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     sendFilesInFolder(formData)
       .then(({ data }) => {
         this.setState({ message: data.message, severity: 'success', open: true });
+        this.getAllFilesWithCurrentPathname();
       })
       .catch(err => {
         console.log(err.response);
@@ -132,35 +146,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
     const pathname = path.join('/') + '/';
     sessionStorage.setItem('pathname', pathname);
-    getFiles(pathname)
-      .then(({ data }) => {
-        this.setState(prev => ({ ...prev, files: data.files, dirs: data.dirs, path }));
-      })
-      .catch(err => {
-        console.log(err.response);
-      });
-  };
-
-  // afficher la navigation dans les dossiers
-  showBreadcrumbs = () => {
-    const { classes } = this.props;
-    const { path } = this.state;
-    return (
-      <Breadcrumbs separator={<NavigateNextIcon fontSize='small' />} aria-label='breadcrumb'>
-        <Link className={classes.breadcrumb} color='inherit' onClick={() => this.handleClickBreadcrumbs(-1)}>
-          {`${getCookie('email') || '/'}`}
-        </Link>
-        {path.map((val: string, index: number) => (
-          <Link
-            key={index.toString()}
-            className={classes.breadcrumb}
-            color='inherit'
-            onClick={() => this.handleClickBreadcrumbs(index)}>
-            {val}
-          </Link>
-        ))}
-      </Breadcrumbs>
-    );
+    this.getAllFilesWithCurrentPathname();
   };
 
   render() {
@@ -184,7 +170,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
               aria-controls='simple-menu'
               aria-haspopup='true'
               startIcon={<AddIcon />}
-              color='primary'
+              style={{ backgroundColor: '#2c3e50', color: 'white' }}
               variant='contained'
               className={classes.button}
               onClick={this.handleClickMenu}>
@@ -221,7 +207,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
             </StyledMenu>
           </Grid>
           <Grid item xs={10}>
-            {this.showBreadcrumbs()}
+            <FolderNavigation.Display path={path} handleClickBreadcrumbs={this.handleClickBreadcrumbs} />
             <Paper className={classes.paper}>
               {dirs &&
                 dirs.map((dir, index) => (
@@ -237,7 +223,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
-                  <Chip label={file} onClick={() => history.push(`/tableau-de-bord/${file}`)} />
+                  <Chip label={file} onClick={() => window.open(`/tableau-de-bord/${file}`, '_blank')} />
                 </div>
               ))}
             </Paper>

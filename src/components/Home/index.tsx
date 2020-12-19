@@ -10,6 +10,7 @@ import {
   withStyles,
   WithStyles,
   Snackbar,
+  ListItemText,
 } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
@@ -109,6 +110,9 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
                       onChange={this.handleChange}
                     />
                   </Grid>
+                <Button className={classes.buttonSignup} onClick={()=>history.push('/recuperation-mot-de-passe')}>
+                  Mot de passe oublié
+                </Button>
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>
