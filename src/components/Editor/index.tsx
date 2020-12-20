@@ -8,6 +8,8 @@ import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import { js_beautify, html_beautify,css_beautify } from 'js-beautify';
+import json_beautify from 'json-beautify';
+
 import beautify from 'beautify';
 import { saveCodeFile } from '../../utils/api';
 import history from '../../history';
@@ -44,7 +46,10 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   beautify = () => {
     switch (this.state.langage) {
       case 'xml':
-        this.setState({ code: beautify(this.state.code, { format: 'html' }) });
+        this.setState({ code: beautify(this.state.code, { format: "html" }) });
+        break;
+        case 'json':
+        this.setState({ code: json_beautify(this.state.code, { format: "json" }, 2, 80) });
         break;
       default:
         break;
