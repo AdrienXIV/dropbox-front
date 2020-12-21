@@ -13,6 +13,10 @@ import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
 import { getprofil } from "../utils/api";
+import { updateprofil } from "../utils/api";
+import history from '../history';
+
+
 
 interface P {}
 interface S {
@@ -35,8 +39,22 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
       this.setState({ isLoaded: true });
     }
   }
-  
 
+  handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      const { data } = await updateprofil(this.state);
+      history.push('/profil');
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    this.setState(prevState => ({
+      ...prevState,
+      [e.target.name]: e.target.value,
+    }));
+  };
   render() {
     const { classes } = this.props;
     const { email, username, isLoaded } = this.state;
@@ -47,7 +65,7 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
         <Container maxWidth='lg' className={classes.container}>
           <Card className={classes.root}>
             <CardContent className={classes.blockLeft}>
-              <form className={classes.form} noValidate autoComplete='off'>
+              <form className={classes.form} noValidate autoComplete='off' onSubmit={this.handleSubmit}>
                 <div className={classes.margin}>
                   <Grid container spacing={1} alignItems='flex-end'>
                     <Grid item>
@@ -64,7 +82,7 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
                       <VpnKeyIcon />
                     </Grid>
                     <Grid item>
-                      <TextField name='userneme' label='userneme' type='text' value={username} />
+                      <TextField name='username' label='username' type='text' value={username} onChange={this.handleChange}/>
                     </Grid>
                   </Grid>
                 </div>

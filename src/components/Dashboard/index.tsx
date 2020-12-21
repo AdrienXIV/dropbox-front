@@ -6,23 +6,18 @@ import {
   Snackbar,
   withStyles,
   WithStyles,
-  Breadcrumbs,
   MenuItem,
   ListItemIcon,
   ListItemText,
   Chip,
-  Link,
 } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
-import NavigateNextIcon from '@material-ui/icons/NavigateNext';
 import FolderIcon from '@material-ui/icons/Folder';
 import Dropzone from 'react-dropzone';
 import styles, { Styles } from './styles';
 import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
-import history from '../../history';
-import { getCookie } from '../../utils/cookie';
 import FolderNavigation from '../FolderNavigation';
 
 declare module 'react' {
@@ -43,8 +38,6 @@ interface S {
   anchorEl: null | HTMLElement;
 }
 const Alert = (props: AlertProps) => <MuiAlert elevation={6} variant='filled' {...props} />;
-//TODO: séparer le composant "showBreadcrumbs" pour afficher le menu de navigation dans les dossiers du dropbox partout
-//TODO: rafraichir le composant pour refaire une requete afin de mettre à jour l'aperçu des fichiers
 export default class Profile extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Profile) as React.ComponentType<P>;
   public state: Readonly<S> = {
@@ -59,6 +52,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   componentDidMount() {
     this.getAllFilesWithCurrentPathname();
+    console.log(sessionStorage.getItem('pathname'));
   }
   componentDidUpdate() {
     const pathname = this.state.path.join('/') + '/';
@@ -104,11 +98,15 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   onDrop = (files: File[]) => {
     const formData = new FormData();
     files.forEach(file => {
+      // ajouter le chemin du répertoire où l'on se trouve
+      formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
+      // ajout des fichiers
       formData.append('myFiles', file);
     });
     sendFiles(formData)
       .then(({ data }) => {
         this.setState({ message: data.message, severity: 'success', open: true });
+        this.getAllFilesWithCurrentPathname();
       })
       .catch(err => {
         console.log(err.response);
@@ -119,12 +117,17 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   onDropFolder = (files: File[]) => {
     const formData = new FormData();
     files.forEach((file: any) => {
+      // ajouter le chemin du répertoire où l'on se trouve
+      formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
+      // ajout du nom des fichiers dans le dossier et sous dossiers
       formData.append('names', String(file.webkitRelativePath));
+      // ajout des fichiers
       formData.append('myFiles', file);
     });
     sendFilesInFolder(formData)
       .then(({ data }) => {
         this.setState({ message: data.message, severity: 'success', open: true });
+        this.getAllFilesWithCurrentPathname();
       })
       .catch(err => {
         console.log(err.response);
@@ -228,7 +231,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 ))}
               {files.map((file, index) => (
                 <div key={index.toString()} className={classes.file}>
-                  <Chip label={file} onClick={() => history.push(`/tableau-de-bord/${file}`)} />
+                  <Chip label={file} onClick={() => window.open(`/tableau-de-bord/${file}`, '_blank')} />
                 </div>
               ))}
             </Paper>
