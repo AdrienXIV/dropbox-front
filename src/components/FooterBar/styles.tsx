@@ -1,7 +1,7 @@
 import { createStyles , Theme } from '@material-ui/core';
 
 export type Styles = 'footerBar' | 'title' | 'mainfooter' | 'root' | 'paper' | 'contenufooter' | 'listemedia' 
-| 'footermedias' | 'footerContact' | 'listeimg' | 'develop' | 'footerh3';
+| 'footermedias' | 'footerContact' | 'listeimg' | 'develop' | 'footerp';
 
 const styles = (theme: Theme) =>
   createStyles({
@@ -21,31 +21,41 @@ const styles = (theme: Theme) =>
       flexGrow: 1,
     },
       contenufooter : {
-        width: '800px',
-        height: '200px',
-        margin: '0 auto',
-
+        minHeight: '64px',
+        flex: 1,
+        margin: '1',
+        padding: '1',
+        backgroundColor: 'rgb(212, 214, 238 )',
+        position: 'fixed',
+        bottom: 0,
+        width: '100%',
+        left: 0,
+        height: '100px',
         display: 'flex',
         alignItems: 'flex-start',
-        fontSize: '20px',
+        fontSize: '11px',
         justifyContent: 'center',
-        padding: '1px ',
+
+
     },
     footerContact: {
     padding: '5px 0',
+    fontSize: '11px',
 
     },
     listeimg :{
       width: '100px',
-      margin:'10px',
-      padding : '5px 0px'   ,
+      height: '100px',
+      margin:'1',
+      padding : '1'   ,
+      
  
     },
     develop: {
       listStyleType: 'none',
     },
-    footerh3: {
-      fontSize: '25px',
+    footerp: {
+      fontSize: '11px',
       paddingBottom: '5px',
     },
 
