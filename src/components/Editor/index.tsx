@@ -13,12 +13,18 @@ import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import { js_beautify, html_beautify,css_beautify } from 'js-beautify';
 import json_beautify from 'json-beautify';
-
+import beautifier from "@unibeautify/beautifier-php-codesniffer";
+import unibeautify, {
+  LanguageOptionValues,
+  BeautifyData,
+  Language,
+} from "unibeautify";
 import beautify from 'beautify';
 import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
 import history from '../../history';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
+import { format } from 'prettier';
 
 interface P {
   language: string;
@@ -53,8 +59,9 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
     // si on fait un copier-coller, le formatage se fait automatiquement
     change.origin === 'paste' && this.beautify();
   };
-
+  
   beautify = () => {
+    
     console.log('beautify', this.state.langage);
     switch (this.state.langage) {
       case 'xml':
@@ -65,6 +72,15 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         break;
       case 'sql':
         this.setState({ code: sqlFormatter.format(this.state.code) });
+        break;
+      case 'css':
+        this.setState({ code: beautify(this.state.code, { format: 'css' }) });
+        break;
+      case 'js':
+        this.setState({ code: beautify(this.state.code, { format: 'css'}) });
+        break;
+      case 'php':
+        //this.setState({code : unibeautify.loadBeautifier(beautifier) });
         break;
       default:
         break;
