@@ -29,13 +29,13 @@ export const getFile = (pathname: string, fileName: string) => {
  * get
  */
 export const getprofil = () => {
-  return axios.get(`/user/getprofil`);
+  return axios.get(`/user`);
 };
 /**
  * PUT
  */
 export const updateprofil = (data: any) => {
-  return axios.put(`/user/editprofil`, data);
+  return axios.put(`/user`, data);
 };
 /**
  * POST
@@ -47,7 +47,7 @@ export const login = (data: any) => {
   return axios.post(`/auth/login`, data);
 };
 export const forgetPassword = (email: string) => {
-  return axios.post(`/auth/forgot-password`, {email});
+  return axios.post(`/auth/forgot-password`, { email });
 };
 export const sendFiles = (data: any) => {
   return axios.post('/share/new-files', data);
@@ -57,14 +57,15 @@ export const sendFilesInFolder = (data: any) => {
   return axios.post('/share/new-folder', data);
 };
 
-export const saveCodeFile = (data: { code: string; language: string; path: string }) => {
-  return axios.post('/share/save-code-file', data);
-};
 /**
- * PATCH
+ * PUT
  */
-export const resetPassword= (data: any) => {
-  return axios.patch(`/auth/reset-password`, data);
+export const resetPassword = (data: any) => {
+  return axios.put(`/auth/reset-password`, data);
+};
+
+export const saveCodeFile = (data: { code: string; language: string; path: string }) => {
+  return axios.put('/share/save-code-file', data);
 };
 
 /**
