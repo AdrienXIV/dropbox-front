@@ -21,11 +21,12 @@ const styles = (theme: Theme) =>
       flexGrow: 1,
     },
       contenufooter : {
+        marginTop: '60px',
         minHeight: '64px',
         flex: 1,
         margin: '1',
         padding: '1',
-        backgroundColor: 'rgb(212, 214, 238 )',
+        backgroundColor: '#2c3e50',
         position: 'fixed',
         bottom: 0,
         width: '100%',
@@ -57,6 +58,8 @@ const styles = (theme: Theme) =>
     footerp: {
       fontSize: '11px',
       paddingBottom: '5px',
+      color: 'white',
+      
     },
 
         

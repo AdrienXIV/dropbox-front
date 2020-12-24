@@ -28,7 +28,7 @@ export class FooterBar extends React.Component<P & WithStyles<Styles>> {
            </Grid>
            <Grid item xs={3}>
             <div className={classes.footerp}>
-                <h3 >developper par :</h3>
+                <h3 >developpé par :</h3>
                 <ul>
                     <li> Adrien Maillard </li>
                     <li>Gaye Mboup </li>   
