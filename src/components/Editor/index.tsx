@@ -8,19 +8,21 @@ import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/php/php';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import { js_beautify, html_beautify, css_beautify } from 'js-beautify';
 import json_beautify from 'json-beautify';
 import beautifier from '@unibeautify/beautifier-php-codesniffer';
-import unibeautify, { LanguageOptionValues, BeautifyData, Language } from 'unibeautify';
 import beautify from 'beautify';
 import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
-import history from '../../history';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
-import { format } from 'prettier';
+import prettier from "prettier/standalone";
+import phpPlugin from "@prettier/plugin-php/standalone";
+import formatter, { txtFormat } from 'code-formatter';
+import { Language } from '@material-ui/icons';
 
 interface P {
   language: string;
@@ -63,7 +65,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         this.setState({ code: beautify(this.state.code, { format: 'html' }) });
         break;
       case 'json':
-        this.setState({ code: beautify(this.state.code, { format: 'json' }) });
+        this.setState({ code: txtFormat(this.state.code, { method: 'json'}) });
         break;
       case 'sql':
         this.setState({ code: sqlFormatter.format(this.state.code) });
@@ -72,10 +74,14 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         this.setState({ code: beautify(this.state.code, { format: 'css' }) });
         break;
       case 'js':
-        this.setState({ code: beautify(this.state.code, { format: 'css' }) });
+        this.setState({ code: beautify(this.state.code, { format: 'js' }) });
         break;
       case 'php':
-        //this.setState({code : unibeautify.loadBeautifier(beautifier) });
+        /*this.setState({ prettier.format(this.state.code, {
+          plugins: [phpPlugin],
+          parser: "php"
+        })
+        });*/
         break;
       default:
         break;
