@@ -13,14 +13,16 @@ import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
 import { js_beautify, html_beautify, css_beautify } from 'js-beautify';
 import json_beautify from 'json-beautify';
-import beautifier from '@unibeautify/beautifier-php-codesniffer';
-import unibeautify, { LanguageOptionValues, BeautifyData, Language } from 'unibeautify';
+//import beautifier from '@unibeautify/beautifier-php-codesniffer';
+//import unibeautify, { LanguageOptionValues, BeautifyData, Language } from 'unibeautify';
 import beautify from 'beautify';
 import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
 import history from '../../history';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
 import { format } from 'prettier';
+import prettier from 'prettier/standalone';
+//import phpPlugin from '@prettier/plugin-php/standalone';
 
 interface P {
   language: string;
@@ -75,7 +77,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         this.setState({ code: beautify(this.state.code, { format: 'css' }) });
         break;
       case 'php':
-        //this.setState({code : unibeautify.loadBeautifier(beautifier) });
+        //  this.setState({ code: prettier.format(this.state.code, { plugins: [phpPlugin], parser: 'php' }) });
         break;
       default:
         break;

@@ -34,15 +34,21 @@
     "web-vitals": "^0.2.4"
   },
   "devDependencies": {
+    "@prettier/plugin-php": "^0.16.1",
     "@types/beautify": "^0.0.0",
     "@types/js-beautify": "^1.13.1",
+    "@types/prettier": "^2.1.6",
     "@types/react-router-dom": "^5.1.6",
     "eslint": "^7.13.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.3.1",
     "eslint-plugin-react": "^7.21.2",
-    "eslint-plugin-react-hooks": "^2.5.1"
+    "eslint-plugin-react-hooks": "^2.5.1",
+    "faker": "^5.1.0",
+    "prettier": "^2.2.1",
+    "puppeteer": "^5.5.0",
+    "puppeteer-core": "^5.5.0"
   },
   "scripts": {
     "start": "react-scripts start",

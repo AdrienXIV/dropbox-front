@@ -64,7 +64,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
     if (getCookie('token')) return <Redirect to='/tableau-de-bord' />;
     const { severity, message, open } = this.state;
     return (
-      <Container maxWidth='lg' className={classes.container}>
+      <Container id='home' maxWidth='lg' className={classes.container}>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           autoHideDuration={6000}
@@ -110,9 +110,9 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
                       onChange={this.handleChange}
                     />
                   </Grid>
-                <Button className={classes.buttonSignup} onClick={()=>history.push('/recuperation-mot-de-passe')}>
-                  Mot de passe oublié
-                </Button>
+                  <Button className={classes.buttonSignup} onClick={() => history.push('/recuperation-mot-de-passe')}>
+                    Mot de passe oublié
+                  </Button>
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>
@@ -124,7 +124,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
           </CardContent>
 
           <CardContent className={classes.blockRight}>
-            <Typography component='h5' variant='h5' align='center'>
+            <Typography id='home-title' component='h5' variant='h5' align='center'>
               Dropbox | IMIE-Paris
             </Typography>
             <Typography variant='subtitle1' align='center'>
