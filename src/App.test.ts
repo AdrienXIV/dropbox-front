@@ -13,8 +13,8 @@ const loginData = {
   password: 'azertyuiop',
 };
 
-describe("Page d'accueil", () => {
-  test('Connexion', async () => {
+describe('Lancement page', () => {
+  test('Accueil', async () => {
     browser = await puppeteer.launch({
       headless: false, // headless mode set to false so browser opens up with visual feedback
       slowMo: 25, // how slow actions should be
@@ -32,6 +32,12 @@ describe("Page d'accueil", () => {
 
     await page.goto(HOST);
     await page.waitForSelector('#login-form');
+  }, 16000);
+});
+
+describe("Page d'accueil", () => {
+  test('Connexion', async () => {
+    await page.waitForSelector('#login-form');
 
     await page.click('input[name=email]');
     await page.type('input[name=email]', loginData.email);
@@ -39,7 +45,7 @@ describe("Page d'accueil", () => {
     await page.type('input[name=password]', loginData.password);
     await page.click('button[type=submit]');
     await page.waitForSelector('#dashboard');
-  }, 1600000);
+  }, 15000);
 
   test('Déconnexion', async () => {
     await page.waitForSelector('#dashboard');
@@ -47,10 +53,14 @@ describe("Page d'accueil", () => {
 
     const html = await page.$eval('#home-title', (e: any) => e.innerHTML);
     expect(html).toBe('Dropbox | IMIE-Paris');
-  }, 16000);
+  }, 5000);
 
   // This function occurs after the result of each tests, it closes the browser
   afterAll(() => {
     browser.close();
   });
 });
+
+//TODO: s'inscrire
+
+//TODO: voir le profil
