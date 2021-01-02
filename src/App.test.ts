@@ -13,8 +13,8 @@ const loginData = {
   password: 'azertyuiop',
 };
 
-describe('Accueil', () => {
-  test("Titre de la page d'accueil chargé correctement", async () => {
+describe("Page d'accueil", () => {
+  test('Connexion', async () => {
     browser = await puppeteer.launch({
       headless: false, // headless mode set to false so browser opens up with visual feedback
       slowMo: 25, // how slow actions should be
@@ -23,20 +23,14 @@ describe('Accueil', () => {
 
     page.emulate({
       viewport: {
-        width: 1200,
-        height: 800,
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+        deviceScaleFactor: window.devicePixelRatio,
       },
       userAgent: '',
     });
 
     await page.goto(HOST);
-    await page.waitForSelector('#home-title');
-
-    const html = await page.$eval('#home-title', (e: any) => e.innerHTML);
-    expect(html).toBe('Dropbox | IMIE-Paris');
-  }, 16000);
-
-  test('Connexion', async () => {
     await page.waitForSelector('#login-form');
 
     await page.click('input[name=email]');
@@ -46,6 +40,14 @@ describe('Accueil', () => {
     await page.click('button[type=submit]');
     await page.waitForSelector('#dashboard');
   }, 1600000);
+
+  test('Déconnexion', async () => {
+    await page.waitForSelector('#dashboard');
+    await page.click('#signout');
+
+    const html = await page.$eval('#home-title', (e: any) => e.innerHTML);
+    expect(html).toBe('Dropbox | IMIE-Paris');
+  }, 16000);
 
   // This function occurs after the result of each tests, it closes the browser
   afterAll(() => {

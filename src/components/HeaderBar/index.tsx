@@ -41,7 +41,9 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
             </Typography>
 
             <div className={classes.signout}>
-              <Button onClick={this.disconnect}>Se déconnecter</Button>
+              <Button id='signout' onClick={this.disconnect}>
+                Se déconnecter
+              </Button>
             </div>
           </Toolbar>
         </AppBar>
