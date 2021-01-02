@@ -79,7 +79,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
             <Typography component='h5' variant='h5' align='center'>
               Connexion
             </Typography>
-            <form onSubmit={this.handleSubmit} className={classes.form} noValidate autoComplete='off'>
+            <form id='login-form' onSubmit={this.handleSubmit} className={classes.form} noValidate autoComplete='off'>
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems='flex-end'>
                   <Grid item>

@@ -1,15 +1,12 @@
 import { URL_API } from './info';
 
+// global
+let browser: any;
+let page: any;
+//
 const faker = require('faker');
 const puppeteer = require('puppeteer');
 const HOST = 'http://localhost:3000';
-
-const routes = {
-  public: {
-    register: `${URL_API}/auth/register`,
-    login: `${URL_API}/auth/login`,
-  },
-};
 
 const loginData = {
   email: 'adri_00@hotmail.fr',
@@ -18,10 +15,11 @@ const loginData = {
 
 describe('Accueil', () => {
   test("Titre de la page d'accueil chargé correctement", async () => {
-    const browser = await puppeteer.launch({
-      headless: false,
+    browser = await puppeteer.launch({
+      headless: false, // headless mode set to false so browser opens up with visual feedback
+      slowMo: 25, // how slow actions should be
     });
-    const page = await browser.newPage();
+    page = await browser.newPage();
 
     page.emulate({
       viewport: {
@@ -36,7 +34,21 @@ describe('Accueil', () => {
 
     const html = await page.$eval('#home-title', (e: any) => e.innerHTML);
     expect(html).toBe('Dropbox | IMIE-Paris');
-
-    browser.close();
   }, 16000);
+
+  test('Connexion', async () => {
+    await page.waitForSelector('#login-form');
+
+    await page.click('input[name=email]');
+    await page.type('input[name=email]', loginData.email);
+    await page.click('input[name=password]');
+    await page.type('input[name=password]', loginData.password);
+    await page.click('button[type=submit]');
+    await page.waitForSelector('#dashboard');
+  }, 1600000);
+
+  // This function occurs after the result of each tests, it closes the browser
+  afterAll(() => {
+    browser.close();
+  });
 });
