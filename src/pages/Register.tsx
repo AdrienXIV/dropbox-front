@@ -46,12 +46,13 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
     e.preventDefault();
     try {
       const { data } = await register(this.state);
+      console.log('data: ', data);
       setCookie('token', data.token, 1);
       // ajout du token dans les requetes http
       axios.defaults.headers = {
         authorization: `Baerer ${data.token}`,
       };
-      history.push('/tableau-de-bord');
+      // history.replace('/tableau-de-bord');
     } catch (error) {
       console.error(error);
     }
@@ -71,11 +72,12 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
       //   console.log('votre mot de pass doit contenir au moins .... ');
       // } else {
       const { data } = await register(this.state);
+      setCookie('token', data.token, 1);
       // ajout du token dans les requetes http
       axios.defaults.headers = {
         authorization: `Baerer ${data.token}`,
       };
-      history.push('/tableau-de-bord');
+      history.replace('/tableau-de-bord');
       // }
     } catch (error) {
       console.error(error);
