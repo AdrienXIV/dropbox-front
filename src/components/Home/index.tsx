@@ -130,7 +130,11 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
             <Typography variant='subtitle1' align='center'>
               Groupe 6
             </Typography>
-            <Button variant='contained' className={classes.buttonSignup} onClick={() => history.push('/inscription')}>
+            <Button
+              id='signup'
+              variant='contained'
+              className={classes.buttonSignup}
+              onClick={() => history.push('/inscription')}>
               S&apos;inscrire
             </Button>
           </CardContent>
