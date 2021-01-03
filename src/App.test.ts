@@ -85,10 +85,11 @@ describe("Page d'accueil", () => {
     await page.waitForSelector('#my-profile');
     //TODO: fenetre window confirm à résoudre
     // use mockImplementation if you want to return a value
-    window.confirm = jest.fn().mockImplementation(() => true);
+    // window.confirm = jest.fn().mockImplementation(() => true);
 
-    expect(window.confirm).toHaveBeenCalled();
-  }, 5000);
+    // expect(window.confirm).toHaveBeenCalled();
+    await page.waitForSelector('#login-form');
+  }, 15000);
 
   // This function occurs after the result of each tests, it closes the browser
   afterAll(() => {

@@ -67,7 +67,7 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
   };
 
   removeMyProfile = async () => {
-    const r = confirm('Voulez-vous supprimer votre profil définitivement ?');
+    const r = window.confirm('Voulez-vous supprimer votre profil définitivement ?');
     if (r)
       try {
         const { data } = await removeProfile();
