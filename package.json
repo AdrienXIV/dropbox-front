@@ -36,6 +36,7 @@
   "devDependencies": {
     "@prettier/plugin-php": "^0.16.1",
     "@types/beautify": "^0.0.0",
+    "@types/jest-dev-server": "^4.2.0",
     "@types/js-beautify": "^1.13.1",
     "@types/prettier": "^2.1.6",
     "@types/react-router-dom": "^5.1.6",
@@ -46,6 +47,7 @@
     "eslint-plugin-react": "^7.21.2",
     "eslint-plugin-react-hooks": "^2.5.1",
     "faker": "^5.1.0",
+    "jest-dev-server": "^4.4.0",
     "prettier": "^2.2.1",
     "puppeteer": "^5.5.0",
     "puppeteer-core": "^5.5.0"

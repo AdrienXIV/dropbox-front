@@ -99,7 +99,7 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
 
     if (!isLoaded) return <div>Chargement…</div>;
     return (
-      <div>
+      <div id='my-profile'>
         <Container maxWidth='lg' className={classes.container}>
           <Snackbar
             anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
@@ -144,6 +144,7 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
                     Modifier
                   </Button>
                   <Button
+                    id='delete-profile'
                     type='button'
                     variant='contained'
                     onClick={this.removeMyProfile}

@@ -1,5 +1,4 @@
-import { URL_API } from './info';
-
+import { setup, teardown } from 'jest-dev-server';
 // global
 let browser: any;
 let page: any;
@@ -75,6 +74,21 @@ describe("Page d'accueil", () => {
     await page.click('button[type=submit]');
     await page.waitForSelector('#dashboard');
   }, 15000);
+
+  test('Voir mon profil', async () => {
+    await page.click('#show-my-profile');
+    await page.waitForSelector('#my-profile');
+  }, 5000);
+
+  test('Supprimer mon profil', async () => {
+    await page.click('#delete-profile');
+    await page.waitForSelector('#my-profile');
+    //TODO: fenetre window confirm à résoudre
+    // use mockImplementation if you want to return a value
+    window.confirm = jest.fn().mockImplementation(() => true);
+
+    expect(window.confirm).toHaveBeenCalled();
+  }, 5000);
 
   // This function occurs after the result of each tests, it closes the browser
   afterAll(() => {
