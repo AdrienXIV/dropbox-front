@@ -20,8 +20,8 @@ import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
 import prettier from "prettier/standalone";
-import phpPlugin from "@prettier/plugin-php/standalone";
-import formatter, { txtFormat } from 'code-formatter';
+import unibeautify from "unibeautify";
+import {txtFormat} from 'code-formatter';
 import { Language } from '@material-ui/icons';
 
 interface P {
@@ -65,7 +65,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         this.setState({ code: beautify(this.state.code, { format: 'html' }) });
         break;
       case 'json':
-        this.setState({ code: txtFormat(this.state.code, { method: 'json'}) });
+        this.setState({ code: beautify(this.state.code,  {format : "json"} ) });
         break;
       case 'sql':
         this.setState({ code: sqlFormatter.format(this.state.code) });
@@ -77,11 +77,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         this.setState({ code: beautify(this.state.code, { format: 'js' }) });
         break;
       case 'php':
-        /*this.setState({ prettier.format(this.state.code, {
-          plugins: [phpPlugin],
-          parser: "php"
-        })
-        });*/
+        //this.setState({ code: unibeautify.loadLanguage('php')});
         break;
       default:
         break;

@@ -46,24 +46,35 @@ export default class Register extends React.Component<P & WithStyles<Styles>,S> 
         ...prevState,
       [e.target.name]:e.target.value}))
 }
-
+ isValidEmail = (email: any) =>{
+     //eslint-disable-next-line
+  const reg = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  return reg.test(String(email).toLowerCase());
+}
+isValidPassword = (email: any) =>{
+  //eslint-disable-next-line
+  const regexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/ ;
+  return regexp.test(String(email).toLowerCase());
+}
 handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
   e.preventDefault();
   const pass = this.state.password;
+  const email = this.state.password;
   try {
-    if(!/^.(?=.{8,})(?=.[a-zA-Z])(?=.\d)(?=.[!#$%&? "]).*$/.test(pass))
-    {
-      console.log('votre mot de pass doit contenir au moins .... ')
-    }else{ 
-  
-  const { data } = await register(this.state);
-  // ajout du token dans les requetes http
-  axios.defaults.headers = {
-    authorization: `Baerer ${data.token}`,
-  };
-  history.push('/tableau-de-bord');
-  } 
-} catch (error) {
+    if(!this.isValidEmail(email)){
+      console.log("l'email n'est pas valide");
+    }else if(!this.isValidPassword(pass)){
+      console.log("le mot de passe doit contenir au moins des caractères spéciaux et des  lettres majuscules");
+
+    }else{
+    // ajout du token dans les requetes http
+    const { data } = await register(this.state);
+    axios.defaults.headers = {
+      authorization: `Baerer ${data.token}`,
+    };
+    history.push('/tableau-de-bord');
+    }
+}catch (error) {
     console.error(error);
     this.setState({open: true, severity: 'error', message: error.response.data.error});
 
