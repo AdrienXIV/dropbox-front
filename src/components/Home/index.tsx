@@ -36,13 +36,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
 
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const pass = this.state.password;
     try {
-      if(!/^.(?=.{8,})(?=.[a-zA-Z])(?=.\d)(?=.[!#$%&? "]).*$/.test(pass))
-      {
-        console.log('votre mot de pass doit contenir au moins .... ')
-      }else{ 
-    
       const { data } = await login(this.state);
       setCookie('token', data.token, 1);
       setCookie('email', this.state.email, 1);
@@ -51,7 +45,6 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
         authorization: `Baerer ${data.token}`,
       };
       history.push('/tableau-de-bord');
-      }
     } catch (error) {
       console.error(error);
       this.setState({ open: true, severity: 'error', message: error.response.data.error });
@@ -117,9 +110,9 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
                       onChange={this.handleChange}
                     />
                   </Grid>
-                <Button className={classes.buttonSignup} onClick={()=>history.push('/recuperation-mot-de-passe')}>
-                  Mot de passe oublié
-                </Button>
+                  <Button className={classes.buttonSignup} onClick={() => history.push('/recuperation-mot-de-passe')}>
+                    Mot de passe oublié
+                  </Button>
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>
