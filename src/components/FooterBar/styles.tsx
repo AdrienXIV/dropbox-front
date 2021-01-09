@@ -1,69 +1,57 @@
-import { createStyles , Theme } from '@material-ui/core';
+import { createStyles, Theme } from '@material-ui/core';
 
-export type Styles = 'footerBar' | 'title' | 'mainfooter' | 'root' | 'paper' | 'contenufooter' | 'listemedia' 
-| 'footermedias' | 'footerContact' | 'listeimg' | 'develop' | 'footerp';
+export type Styles =
+  | 'footerBar'
+  | 'title'
+  | 'mainfooter'
+  | 'root'
+  | 'paper'
+  | 'contenufooter'
+  | 'listemedia'
+  | 'footermedias'
+  | 'footerContact'
+  | 'listeimg'
+  | 'develop'
+  | 'footerp';
 
 const styles = (theme: Theme) =>
   createStyles({
     footerBar: {
-        minHeight: '64px',
-        flex: 1,
-        margin: '1',
-        padding: '1',
-        backgroundColor: 'rgb(212, 214, 238 )',
-        position: 'fixed',
-        bottom: 0,
-        width: '100%',
-        left: 0,
-
-    }, 
+      flex: 1,
+      backgroundColor: 'rgb(212, 214, 238 )',
+      width: '100%',
+    },
     root: {
       flexGrow: 1,
     },
-      contenufooter : {
-        marginTop: '60px',
-        minHeight: '64px',
-        flex: 1,
-        margin: '1',
-        padding: '1',
-        backgroundColor: '#2c3e50',
-        position: 'fixed',
-        bottom: 0,
-        width: '100%',
-        left: 0,
-        height: '100px',
-        display: 'flex',
-        alignItems: 'flex-start',
-        fontSize: '11px',
-        justifyContent: 'center',
-
-
+    contenufooter: {
+      flex: 1,
+      marginTop: '2.5%',
+      backgroundColor: '#2c3e50',
+      width: '100%',
+      display: 'flex',
+      alignItems: 'flex-start',
+      fontSize: 'medium',
+      justifyContent: 'center',
     },
     footerContact: {
-    padding: '5px 0',
-    fontSize: '11px',
-
+      padding: '5px 0',
+      fontSize: 'medium',
     },
-    listeimg :{
+    listeimg: {
       width: '100px',
       height: '100px',
-      margin:'1',
-      padding : '1'   ,
-      
- 
+      margin: '1',
+      padding: '1',
     },
     develop: {
       listStyleType: 'none',
     },
     footerp: {
-      fontSize: '11px',
+      fontSize: 'medium',
       paddingBottom: '5px',
       color: 'white',
-      
     },
-
-        
-});
+  });
 
 export default styles;
-
