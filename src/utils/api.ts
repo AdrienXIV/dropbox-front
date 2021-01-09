@@ -60,8 +60,8 @@ export const sendFilesInFolder = (data: any) => {
 /**
  * PUT
  */
-export const resetPassword = (data: any) => {
-  return axios.put(`/auth/reset-password`, data);
+export const resetPassword = (data: { password: string; confirm: string; str: string }) => {
+  return axios.put(`/auth/reset-password/${data.str}`, data);
 };
 
 export const saveCodeFile = (data: { code: string; language: string; path: string }) => {
