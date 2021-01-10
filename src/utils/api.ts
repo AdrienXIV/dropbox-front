@@ -29,13 +29,13 @@ export const getFile = (pathname: string, fileName: string) => {
  * get
  */
 export const getprofil = () => {
-  return axios.get(`/user/getprofil`);
+  return axios.get(`/user`);
 };
 /**
  * PUT
  */
 export const updateprofil = (data: any) => {
-  return axios.put(`/user/editprofil`, data);
+  return axios.put(`/user`, data);
 };
 /**
  * POST
@@ -57,14 +57,15 @@ export const sendFilesInFolder = (data: any) => {
   return axios.post('/share/new-folder', data);
 };
 
-export const saveCodeFile = (data: { code: string; language: string; path: string }) => {
-  return axios.post('/share/save-code-file', data);
-};
 /**
- * PATCH
+ * PUT
  */
-export const resetPassword = (data: any) => {
-  return axios.patch(`/auth/reset-password`, data);
+export const resetPassword = (data: { password: string; confirm: string; str: string }) => {
+  return axios.put(`/auth/reset-password/${data.str}`, data);
+};
+
+export const saveCodeFile = (data: { code: string; language: string; path: string }) => {
+  return axios.put('/share/save-code-file', data);
 };
 
 /**

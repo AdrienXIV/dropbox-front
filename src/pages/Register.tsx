@@ -63,24 +63,40 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
     }));
   };
 
+  isValidEmail = (email: string) => {
+    return /\S+@\S+\.\S+/.test(email);
+  };
+  isValidPassword = (password: string) => {
+    const regexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
+    return regexp.test(password);
+  };
+
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const pass = this.state.password;
+    const { password, confirm, email } = this.state;
+    const errorsField = [];
     try {
-      if(!/^.(?=.{8,})(?=.[a-zA-Z])(?=.\d)(?=.[!#$%&? "]).*$/.test(pass))
-      {
-        console.log('votre mot de pass doit contenir au moins .... ')
-      }else{
-
-      const { data } = await register(this.state);
-      setCookie('token', data.token, 1);
-      setCookie('email', this.state.email, 1);
-      // ajout du token dans les requetes http
-      axios.defaults.headers = {
-        authorization: `Baerer ${data.token}`,
-      };
-      history.replace('/tableau-de-bord');
-      // }
+      if (!this.isValidEmail(email)) {
+        errorsField.push('Format courriel invalide');
+      }
+      if (!this.isValidPassword(password)) {
+        errorsField.push('Le mot de passe doit contenir au moins des caractères spéciaux et des lettres majuscules');
+      }
+      if (password !== confirm) {
+        errorsField.push('Les mots de passe ne sont pas identiques');
+      }
+      // si y'a des erreurs
+      if (errorsField.length > 0) {
+        // affichage des erreurs
+        this.setState({ message: errorsField.join(' | '), severity: 'error', open: true });
+      } else {
+        // ajout du token dans les requetes http
+        // const { data } = await register(this.state);
+        // axios.defaults.headers = {
+        //   authorization: `Baerer ${data.token}`,
+        // };
+        // history.push('/tableau-de-bord');
+      }
     } catch (error) {
       console.error(error);
       this.setState({ open: true, severity: 'error', message: error.response.data.error });
@@ -98,7 +114,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
       <Container maxWidth='lg' className={classes.container}>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          autoHideDuration={6000}
+          autoHideDuration={severity === 'error' ? null : 6000}
           open={open}
           onClose={this.handleClose}>
           <Alert onClose={this.handleClose} severity={severity}>
@@ -111,6 +127,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
               Inscription
             </Typography>
             <form className={classes.form} noValidate autoComplete='off' onSubmit={this.handleSubmit}>
+              <span>* champ requis</span>
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems='flex-end'>
                   <Grid item>
@@ -118,6 +135,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
                   </Grid>
                   <Grid item>
                     <TextField
+                      required
                       name='email'
                       label='Courriel'
                       type='email'
@@ -134,6 +152,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
                   </Grid>
                   <Grid item>
                     <TextField
+                      required
                       name='username'
                       label="Nom d'utilisateur"
                       type='text'
@@ -150,6 +169,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
                   </Grid>
                   <Grid item>
                     <TextField
+                      required
                       name='password'
                       label='password'
                       type='password'
@@ -166,6 +186,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
                   </Grid>
                   <Grid item>
                     <TextField
+                      required
                       name='confirm'
                       label='Confirmer password'
                       type='password'

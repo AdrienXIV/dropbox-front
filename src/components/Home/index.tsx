@@ -110,9 +110,9 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
                       onChange={this.handleChange}
                     />
                   </Grid>
-                <Button className={classes.buttonSignup} onClick={()=>history.push('/recuperation-mot-de-passe')}>
-                  Mot de passe oublié
-                </Button>
+                  <Button className={classes.buttonSignup} onClick={() => history.push('/recuperation-mot-de-passe')}>
+                    Mot de passe oublié
+                  </Button>
                 </Grid>
               </div>
               <div className={classes.buttonSignin}>

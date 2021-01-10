@@ -52,6 +52,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   componentDidMount() {
     this.getAllFilesWithCurrentPathname();
+    console.log(sessionStorage.getItem('pathname'));
   }
   componentDidUpdate() {
     const pathname = this.state.path.join('/') + '/';
@@ -97,6 +98,9 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   onDrop = (files: File[]) => {
     const formData = new FormData();
     files.forEach(file => {
+      // ajouter le chemin du répertoire où l'on se trouve
+      formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
+      // ajout des fichiers
       formData.append('myFiles', file);
     });
     sendFiles(formData)
@@ -113,7 +117,11 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   onDropFolder = (files: File[]) => {
     const formData = new FormData();
     files.forEach((file: any) => {
+      // ajouter le chemin du répertoire où l'on se trouve
+      formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
+      // ajout du nom des fichiers dans le dossier et sous dossiers
       formData.append('names', String(file.webkitRelativePath));
+      // ajout des fichiers
       formData.append('myFiles', file);
     });
     sendFilesInFolder(formData)

@@ -1,47 +1,57 @@
-import { createStyles , Theme } from '@material-ui/core';
+import { createStyles, Theme } from '@material-ui/core';
 
-export type Styles = 'footerBar' | 'title' | 'mainfooter' | 'root' | 'paper' ;
+export type Styles =
+  | 'footerBar'
+  | 'title'
+  | 'mainfooter'
+  | 'root'
+  | 'paper'
+  | 'contenufooter'
+  | 'listemedia'
+  | 'footermedias'
+  | 'footerContact'
+  | 'listeimg'
+  | 'develop'
+  | 'footerp';
 
 const styles = (theme: Theme) =>
   createStyles({
     footerBar: {
-        minHeight: '64px',
-        flex: 1,
-        margin: '1',
-        padding: '1',
+      flex: 1,
       backgroundColor: 'rgb(212, 214, 238 )',
-      position: 'fixed',
-      bottom: 0,
       width: '100%',
-      left: 0,
-
-    }, 
+    },
     root: {
       flexGrow: 1,
     },
-    paper: {
-      padding: theme.spacing(2),
-      textAlign: 'center',
-    },
-    mainfooter : {
-      color: 'white',
-      backgroundColor: '',
-      padding:'0 24px',
-      position: 'relative' ,
-      bottom: 0,
+    contenufooter: {
+      flex: 1,
+      marginTop: '2.5%',
+      backgroundColor: '#2c3e50',
       width: '100%',
-
-
+      display: 'flex',
+      alignItems: 'flex-start',
+      fontSize: 'medium',
+      justifyContent: 'center',
     },
-    title: {
-        width: '100%',
-        display: 'none',
-        [theme.breakpoints.up('sm')]: {
-          display: 'block',
-        },
-      },
-     
-});
+    footerContact: {
+      padding: '5px 0',
+      fontSize: 'medium',
+    },
+    listeimg: {
+      width: '100px',
+      height: '100px',
+      margin: '1',
+      padding: '1',
+    },
+    develop: {
+      listStyleType: 'none',
+    },
+    footerp: {
+      fontSize: 'medium',
+      paddingBottom: '5px',
+      color: 'white',
+    },
+  });
 
 export default styles;
-

@@ -1,17 +1,29 @@
 import React from 'react';
 import { Snackbar, withStyles, WithStyles } from '@material-ui/core';
 import styles, { Styles } from './styles';
+import 'codemirror/addon/lint/lint.css';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/xml/xml';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
+import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/php/php';
+import 'codemirror/addon/lint/lint';
+import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
-import { js_beautify, html_beautify,css_beautify } from 'js-beautify';
+import { js_beautify, html_beautify, css_beautify } from 'js-beautify';
+import json_beautify from 'json-beautify';
+import beautifier from '@unibeautify/beautifier-php-codesniffer';
 import beautify from 'beautify';
+import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
-import history from '../../history';
 import Alert, { AlertProps } from '@material-ui/lab/Alert';
+import prettier from "prettier/standalone";
+import unibeautify from "unibeautify";
+import {txtFormat} from 'code-formatter';
+import { Language } from '@material-ui/icons';
+
 interface P {
   language: string;
   refValue: React.RefObject<any> | undefined;
@@ -33,6 +45,11 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   componentDidMount() {
     console.log(this.props);
     this.setState({ langage: this.props.language, code: this.props.value });
+
+    // formattage après la récupération
+    setTimeout(() => {
+      this.beautify();
+    }, 250);
   }
 
   onChange = (editor: any, change: any, value: string) => {
@@ -42,9 +59,25 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   };
 
   beautify = () => {
+    console.log('beautify', this.state.langage);
     switch (this.state.langage) {
       case 'xml':
         this.setState({ code: beautify(this.state.code, { format: 'html' }) });
+        break;
+      case 'json':
+        this.setState({ code: beautify(this.state.code,  {format : "json"} ) });
+        break;
+      case 'sql':
+        this.setState({ code: sqlFormatter.format(this.state.code) });
+        break;
+      case 'css':
+        this.setState({ code: beautify(this.state.code, { format: 'css' }) });
+        break;
+      case 'js':
+        this.setState({ code: beautify(this.state.code, { format: 'js' }) });
+        break;
+      case 'php':
+        //this.setState({ code: unibeautify.loadLanguage('php')});
         break;
       default:
         break;
