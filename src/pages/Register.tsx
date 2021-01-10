@@ -89,13 +89,14 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
       if (errorsField.length > 0) {
         // affichage des erreurs
         this.setState({ message: errorsField.join(' | '), severity: 'error', open: true });
+        return;
       } else {
         // ajout du token dans les requetes http
-        // const { data } = await register(this.state);
-        // axios.defaults.headers = {
-        //   authorization: `Baerer ${data.token}`,
-        // };
-        // history.push('/tableau-de-bord');
+        const { data } = await register(this.state);
+        axios.defaults.headers = {
+          authorization: `Baerer ${data.token}`,
+        };
+        history.push('/tableau-de-bord');
       }
     } catch (error) {
       console.error(error);
