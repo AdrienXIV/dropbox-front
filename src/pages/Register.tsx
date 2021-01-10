@@ -67,7 +67,7 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
     return /\S+@\S+\.\S+/.test(email);
   };
   isValidPassword = (password: string) => {
-    const regexp = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[#$^+=!*()@%&]).{8,10}$/;
+    const regexp = /^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$/;
     return regexp.test(password);
   };
 
