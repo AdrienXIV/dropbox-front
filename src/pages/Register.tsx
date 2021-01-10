@@ -93,6 +93,8 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
       } else {
         // ajout du token dans les requetes http
         const { data } = await register(this.state);
+        setCookie('token', data.token, 1);
+        setCookie('email', this.state.email, 1);
         axios.defaults.headers = {
           authorization: `Baerer ${data.token}`,
         };
