@@ -82,6 +82,12 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
       case 'js':
         this.setState({ code: beautify(this.state.code, { format: 'js' }), language: 'javascript' });
         break;
+      case 'jsx':
+        this.setState({ code: beautify(this.state.code, { format: 'js' }), language: 'jsx' });
+        break;
+      case 'ts':
+        this.setState({ code: beautify(this.state.code, { format: 'js' }), language: 'javascript' });
+        break;
       case 'php':
         //this.setState({ code: unibeautify.loadLanguage('php')});
         break;
