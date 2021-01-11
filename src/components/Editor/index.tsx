@@ -1,28 +1,31 @@
 import React from 'react';
 import { Snackbar, withStyles, WithStyles } from '@material-ui/core';
+import Alert, { AlertProps } from '@material-ui/lab/Alert';
 import styles, { Styles } from './styles';
 import 'codemirror/addon/lint/lint.css';
 import 'codemirror/lib/codemirror.css';
 import 'codemirror/theme/material.css';
 import 'codemirror/mode/xml/xml';
+import 'codemirror/mode/htmlmixed/htmlmixed';
+import 'codemirror/mode/htmlembedded/htmlembedded';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/css/css';
 import 'codemirror/mode/sql/sql';
+import 'codemirror/mode/jsx/jsx';
 import 'codemirror/mode/php/php';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
-import { js_beautify, html_beautify, css_beautify } from 'js-beautify';
-import json_beautify from 'json-beautify';
-import beautifier from '@unibeautify/beautifier-php-codesniffer';
+// import { js_beautify, html_beautify, css_beautify } from 'js-beautify';
+// import json_beautify from 'json-beautify';
+// import beautifier from '@unibeautify/beautifier-php-codesniffer';
 import beautify from 'beautify';
 import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
-import Alert, { AlertProps } from '@material-ui/lab/Alert';
-import prettier from "prettier/standalone";
-import unibeautify from "unibeautify";
-import {txtFormat} from 'code-formatter';
-import { Language } from '@material-ui/icons';
+// import prettier from 'prettier/standalone';
+// import unibeautify from 'unibeautify';
+// import { txtFormat } from 'code-formatter';
+// import { Language } from '@material-ui/icons';
 
 interface P {
   language: string;
@@ -32,7 +35,7 @@ interface P {
 }
 interface S {
   code: string;
-  langage: string;
+  language: string;
   open: boolean;
   message: string;
   severity: AlertProps['severity'];
@@ -40,11 +43,11 @@ interface S {
 
 export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   public static Display = withStyles(styles as any)(Editor) as React.ComponentType<P>;
-  public state: Readonly<S> = { code: '', langage: 'xml', open: false, severity: 'success', message: '' };
+  public state: Readonly<S> = { code: '', language: 'xml', open: false, severity: 'success', message: '' };
 
   componentDidMount() {
     console.log(this.props);
-    this.setState({ langage: this.props.language, code: this.props.value });
+    this.setState({ language: this.props.language, code: this.props.value });
 
     // formattage après la récupération
     setTimeout(() => {
@@ -59,22 +62,25 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   };
 
   beautify = () => {
-    console.log('beautify', this.state.langage);
-    switch (this.state.langage) {
+    console.log('beautify', this.state.language);
+    switch (this.state.language) {
       case 'xml':
-        this.setState({ code: beautify(this.state.code, { format: 'html' }) });
+        this.setState({ code: beautify(this.state.code, { format: 'html' }), language: 'xml' });
+        break;
+      case 'html':
+        this.setState({ code: beautify(this.state.code, { format: 'html' }), language: 'htmlmixed' });
         break;
       case 'json':
-        this.setState({ code: beautify(this.state.code,  {format : "json"} ) });
+        this.setState({ code: beautify(this.state.code, { format: 'json' }), language: 'json' });
         break;
       case 'sql':
-        this.setState({ code: sqlFormatter.format(this.state.code) });
+        this.setState({ code: sqlFormatter.format(this.state.code), language: 'sql' });
         break;
       case 'css':
-        this.setState({ code: beautify(this.state.code, { format: 'css' }) });
+        this.setState({ code: beautify(this.state.code, { format: 'css' }), language: 'css' });
         break;
       case 'js':
-        this.setState({ code: beautify(this.state.code, { format: 'js' }) });
+        this.setState({ code: beautify(this.state.code, { format: 'js' }), language: 'javascript' });
         break;
       case 'php':
         //this.setState({ code: unibeautify.loadLanguage('php')});
@@ -89,7 +95,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
 
     saveCodeFile({
       code: this.state.code,
-      language: this.state.langage,
+      language: this.state.language,
       path: `${path}/${this.props.filename}`,
     })
       .then(({ data }) => {
@@ -106,8 +112,8 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
     this.setState({ open: false });
   };
   render() {
-    const { classes, language, refValue } = this.props;
-    const { code, open, message, severity } = this.state;
+    const { classes, refValue } = this.props;
+    const { code, open, message, severity, language } = this.state;
     return (
       <div className={classes.root}>
         <Snackbar
