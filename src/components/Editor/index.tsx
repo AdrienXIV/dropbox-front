@@ -16,16 +16,12 @@ import 'codemirror/mode/php/php';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
-// import { js_beautify, html_beautify, css_beautify } from 'js-beautify';
-// import json_beautify from 'json-beautify';
 // import beautifier from '@unibeautify/beautifier-php-codesniffer';
 import beautify from 'beautify';
 import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
 // import prettier from 'prettier/standalone';
 // import unibeautify from 'unibeautify';
-// import { txtFormat } from 'code-formatter';
-// import { Language } from '@material-ui/icons';
 
 interface P {
   language: string;
