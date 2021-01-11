@@ -7,6 +7,7 @@ const styles = (theme: Theme) =>
       padding: 15,
     },
     paper: {
+      minHeight: '59vh',
       padding: theme.spacing(2),
       textAlign: 'center',
       color: theme.palette.text.secondary,
