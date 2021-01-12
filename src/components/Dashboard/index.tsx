@@ -113,7 +113,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     if (errors.length > 0) {
       // affichage de l'erreur s'il y'en a
       this.setState({
-        message: `Fichiers ${errors.join(', ')} ne sont pas au bon format`,
+        message: `Fichiers [ ${errors.join(' | ')} ] ne sont pas au bon format`,
         severity: 'warning',
         open: true,
       });
@@ -133,6 +133,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
   onDropFolder = (files: File[]) => {
     const formData = new FormData();
     const errors: string[] = [];
+    let folder = '';
     files.forEach((file: any) => {
       console.log('file: ', file);
       if (checkExtension(file.name as string)) {
@@ -143,6 +144,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
         // ajout des fichiers
         formData.append('myFiles', file);
       } else {
+        folder = String(file.webkitRelativePath).split('/')[0];
         // ajout des erreurs si des fichiers ne sont pas au bon format
         errors.push(file.name as string);
       }
@@ -150,20 +152,20 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     if (errors.length > 0) {
       // affichage de l'erreur s'il y'en a
       this.setState({
-        message: `Fichiers ${errors.join(', ')} ne sont pas au bon format`,
+        message: `Fichiers [ ${errors.join(' | ')} ] du dossier [ ${folder} ] ne sont pas au bon format`,
         severity: 'warning',
         open: true,
       });
     } else {
-      // sendFilesInFolder(formData)
-      //   .then(({ data }) => {
-      //     this.setState({ message: data.message, severity: 'success', open: true });
-      //     this.getAllFilesWithCurrentPathname();
-      //   })
-      //   .catch(err => {
-      //     console.log(err.response);
-      //     this.setState({ message: err.response.data.error, severity: 'error', open: true });
-      //   });
+      sendFilesInFolder(formData)
+        .then(({ data }) => {
+          this.setState({ message: data.message, severity: 'success', open: true });
+          this.getAllFilesWithCurrentPathname();
+        })
+        .catch(err => {
+          console.log(err.response);
+          this.setState({ message: err.response.data.error, severity: 'error', open: true });
+        });
     }
   };
 
@@ -197,7 +199,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
       <div className={classes.root}>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-          autoHideDuration={6000}
+          autoHideDuration={severity === 'warning' ? undefined : 6000}
           open={open}
           onClose={this.handleClose}>
           <Alert onClose={this.handleClose} severity={severity}>
