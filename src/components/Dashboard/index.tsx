@@ -19,6 +19,7 @@ import styles, { Styles } from './styles';
 import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import FolderNavigation from '../FolderNavigation';
+import { checkExtension } from '../../utils/checkExtension';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -97,42 +98,73 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   onDrop = (files: File[]) => {
     const formData = new FormData();
+    const errors: string[] = [];
     files.forEach(file => {
-      // ajouter le chemin du répertoire où l'on se trouve
-      formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
-      // ajout des fichiers
-      formData.append('myFiles', file);
+      if (checkExtension(file.name as string)) {
+        // ajouter le chemin du répertoire où l'on se trouve
+        formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
+        // ajout des fichiers
+        formData.append('myFiles', file);
+      } else {
+        // ajout des erreurs si des fichiers ne sont pas au bon format
+        errors.push(file.name as string);
+      }
     });
-    sendFiles(formData)
-      .then(({ data }) => {
-        this.setState({ message: data.message, severity: 'success', open: true });
-        this.getAllFilesWithCurrentPathname();
-      })
-      .catch(err => {
-        console.log(err.response);
-        this.setState({ message: err.response.data.error, severity: 'error', open: true });
+    if (errors.length > 0) {
+      // affichage de l'erreur s'il y'en a
+      this.setState({
+        message: `Fichiers ${errors.join(', ')} ne sont pas au bon format`,
+        severity: 'warning',
+        open: true,
       });
+    } else {
+      sendFiles(formData)
+        .then(({ data }) => {
+          this.setState({ message: data.message, severity: 'success', open: true });
+          this.getAllFilesWithCurrentPathname();
+        })
+        .catch(err => {
+          console.log(err.response);
+          this.setState({ message: err.response.data.error, severity: 'error', open: true });
+        });
+    }
   };
 
   onDropFolder = (files: File[]) => {
     const formData = new FormData();
+    const errors: string[] = [];
     files.forEach((file: any) => {
-      // ajouter le chemin du répertoire où l'on se trouve
-      formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
-      // ajout du nom des fichiers dans le dossier et sous dossiers
-      formData.append('names', String(file.webkitRelativePath));
-      // ajout des fichiers
-      formData.append('myFiles', file);
+      console.log('file: ', file);
+      if (checkExtension(file.name as string)) {
+        // ajouter le chemin du répertoire où l'on se trouve
+        formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
+        // ajout du nom des fichiers dans le dossier et sous dossiers
+        formData.append('names', String(file.webkitRelativePath));
+        // ajout des fichiers
+        formData.append('myFiles', file);
+      } else {
+        // ajout des erreurs si des fichiers ne sont pas au bon format
+        errors.push(file.name as string);
+      }
     });
-    sendFilesInFolder(formData)
-      .then(({ data }) => {
-        this.setState({ message: data.message, severity: 'success', open: true });
-        this.getAllFilesWithCurrentPathname();
-      })
-      .catch(err => {
-        console.log(err.response);
-        this.setState({ message: err.response.data.error, severity: 'error', open: true });
+    if (errors.length > 0) {
+      // affichage de l'erreur s'il y'en a
+      this.setState({
+        message: `Fichiers ${errors.join(', ')} ne sont pas au bon format`,
+        severity: 'warning',
+        open: true,
       });
+    } else {
+      // sendFilesInFolder(formData)
+      //   .then(({ data }) => {
+      //     this.setState({ message: data.message, severity: 'success', open: true });
+      //     this.getAllFilesWithCurrentPathname();
+      //   })
+      //   .catch(err => {
+      //     console.log(err.response);
+      //     this.setState({ message: err.response.data.error, severity: 'error', open: true });
+      //   });
+    }
   };
 
   handleClickMenu = (event: React.MouseEvent<HTMLElement>) => {
@@ -196,7 +228,12 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 <Dropzone onDrop={this.onDrop}>
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps({ className: 'dropzone' })}>
-                      <input {...getInputProps()} />
+                      <input
+                        {...getInputProps({
+                          accept:
+                            '.doc,.docx,.pdf,.html,.css,.js,.jsx,.ts,.tsx,.php,.sql,.xml,.xls,.xlsx,.ppt,.pptx,.json',
+                        })}
+                      />
                       Importer des fichiers
                     </div>
                   )}
@@ -206,7 +243,14 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
                 <Dropzone onDrop={this.onDropFolder}>
                   {({ getRootProps, getInputProps }) => (
                     <div {...getRootProps({ className: 'dropzone' })}>
-                      <input {...getInputProps()} webkitdirectory='' directory='' />
+                      <input
+                        {...getInputProps({
+                          accept:
+                            '.doc,.docx,.pdf,.html,.css,.js,.jsx,.ts,.tsx,.php,.sql,.xml,.xls,.xlsx,.ppt,.pptx,.json',
+                        })}
+                        webkitdirectory=''
+                        directory=''
+                      />
                       Importer un dossier
                     </div>
                   )}
