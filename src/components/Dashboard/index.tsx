@@ -219,13 +219,13 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
               Nouveau
             </Button>
             <StyledMenu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={this.handleCloseMenu}>
-              <MenuItem>
+              {/* <MenuItem>
                 <ListItemIcon>
                   <FolderIcon />
                 </ListItemIcon>
                 <ListItemText primary='Dossier' />
               </MenuItem>
-              <div style={{ height: 1, backgroundColor: 'silver' }} />
+              <div style={{ height: 1, backgroundColor: 'silver' }} /> */}
               <MenuItem>
                 <Dropzone onDrop={this.onDrop}>
                   {({ getRootProps, getInputProps }) => (
