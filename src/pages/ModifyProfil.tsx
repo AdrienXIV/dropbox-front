@@ -6,6 +6,7 @@ import styles, { Styles } from './styles';
 import { getprofil } from '../utils/api';
 import { updateprofil } from '../utils/api';
 import history from '../history';
+import { setCookie } from '../utils/cookie';
 
 interface P {}
 interface S {
@@ -24,6 +25,13 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
       console.log('data: ', data);
     } catch (error) {
       console.log('error: ', error);
+      // mauvais token donc retour à l'accueil pour se connecter
+      if (error.response.status === 401 || error.response.status === 403) {
+        // suppression des cookies + redirection accueil si le token n'est pas bon
+        setCookie('token', '', 0);
+        setCookie('email', '', 0);
+        history.replace('/');
+      }
     }
   }
 

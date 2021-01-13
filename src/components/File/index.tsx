@@ -5,6 +5,7 @@ import styles, { Styles } from './styles';
 import { getFile } from '../../utils/api';
 import Editor from '../Editor';
 import history from '../../history';
+import { setCookie } from '../../utils/cookie';
 
 interface P {
   match: {
@@ -41,13 +42,23 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
     const pathname = sessionStorage.getItem('pathname') ? (sessionStorage.getItem('pathname') as string) : '';
     // récupérer le nom du fichier
     const filename = this.props.match.params.file;
-    getFile(pathname, filename).then(({ data }) => {
-      if (!data.isCode) {
-        this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
-      } else {
-        this.setState({ file: data.file, isCode: true, language: data.ext });
-      }
-    });
+    getFile(pathname, filename)
+      .then(({ data }) => {
+        if (!data.isCode) {
+          this.setState({ file: 'data:application/pdf;base64, ' + data.file, isCode: false });
+        } else {
+          this.setState({ file: data.file, isCode: true, language: data.ext });
+        }
+      })
+      .catch(error => {
+        console.log('error: ', error);
+        if (error.response.status === 401 || error.response.status === 403) {
+          // suppression des cookies + redirection accueil si le token n'est pas bon
+          setCookie('token', '', 0);
+          setCookie('email', '', 0);
+          history.replace('/');
+        }
+      });
   }
 
   handleClickMenu = (event: React.MouseEvent<HTMLElement>) => {

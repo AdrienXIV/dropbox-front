@@ -1,16 +1,5 @@
 import React from 'react';
-import {
-  Grid,
-  Paper,
-  Button,
-  Snackbar,
-  withStyles,
-  WithStyles,
-  MenuItem,
-  ListItemIcon,
-  ListItemText,
-  Chip,
-} from '@material-ui/core';
+import { Grid, Paper, Button, Snackbar, withStyles, WithStyles, MenuItem, Chip } from '@material-ui/core';
 import MuiAlert, { AlertProps } from '@material-ui/lab/Alert';
 import AddIcon from '@material-ui/icons/Add';
 import FolderIcon from '@material-ui/icons/Folder';
@@ -20,6 +9,8 @@ import { sendFiles, getFiles, sendFilesInFolder } from '../../utils/api';
 import { StyledMenu } from '../Home/styles';
 import FolderNavigation from '../FolderNavigation';
 import { checkExtension } from '../../utils/checkExtension';
+import { setCookie } from '../../utils/cookie';
+import history from '../../history';
 
 declare module 'react' {
   interface HTMLAttributes<T> extends AriaAttributes, DOMAttributes<T> {
@@ -91,8 +82,14 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
       .then(({ data }) => {
         this.setState(prev => ({ ...prev, dirs: data.dirs, files: data.files }));
       })
-      .catch(err => {
-        console.log(err.response);
+      .catch(error => {
+        console.log(error.response);
+        if (error.response.status === 401 || error.response.status === 403) {
+          // suppression des cookies + redirection accueil si le token n'est pas bon
+          setCookie('token', '', 0);
+          setCookie('email', '', 0);
+          history.replace('/');
+        }
       });
   }
 
