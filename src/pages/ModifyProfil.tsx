@@ -1,42 +1,29 @@
 import React from 'react';
-import {
-  Button,
-  Container,
-  Grid,
-  TextField,
-  Card,
-  CardContent,
-  withStyles,
-  WithStyles,
-} from '@material-ui/core';
+import { Button, Container, Grid, TextField, Card, CardContent, withStyles, WithStyles } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
 import styles, { Styles } from './styles';
-import { getprofil } from "../utils/api";
-import { updateprofil } from "../utils/api";
+import { getprofil } from '../utils/api';
+import { updateprofil } from '../utils/api';
 import history from '../history';
-
-
 
 interface P {}
 interface S {
   email: string;
   username: string;
-  isLoaded: boolean;
 }
- 
-export default class ModifyProfil extends React.Component<P & WithStyles<Styles>,S> {
-  public static Display = withStyles(styles as any)(ModifyProfil) as React.ComponentType<P>;
-  public state: Readonly<S> = { email: '', username: '', isLoaded: false }; 
 
+export default class ModifyProfil extends React.Component<P & WithStyles<Styles>, S> {
+  public static Display = withStyles(styles as any)(ModifyProfil) as React.ComponentType<P>;
+  public state: Readonly<S> = { email: '', username: '' };
 
   async componentDidMount() {
     try {
       const { data } = await getprofil();
-      this.setState({ isLoaded: true, ...data });
+      this.setState({ ...data });
       console.log('data: ', data);
     } catch (error) {
-      this.setState({ isLoaded: true });
+      console.log('error: ', error);
     }
   }
 
@@ -57,9 +44,8 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
   };
   render() {
     const { classes } = this.props;
-    const { email, username, isLoaded } = this.state;
+    const { email, username } = this.state;
 
-    if (!isLoaded) return <div>Chargement…</div>;
     return (
       <div>
         <Container maxWidth='lg' className={classes.container}>
@@ -82,13 +68,19 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
                       <VpnKeyIcon />
                     </Grid>
                     <Grid item>
-                      <TextField name='username' label='username' type='text' value={username} onChange={this.handleChange}/>
+                      <TextField
+                        name='username'
+                        label='username'
+                        type='text'
+                        value={username}
+                        onChange={this.handleChange}
+                      />
                     </Grid>
                   </Grid>
                 </div>
                 <div className={classes.buttonSignin}>
                   <Button type='submit' variant='contained'>
-                   Modifier
+                    Modifier
                   </Button>
                 </div>
               </form>

@@ -12,6 +12,10 @@ axios.defaults.headers = {
 /**
  * GET
  */
+export const checkToken = () => {
+  return axios.get('/auth/check-token');
+};
+
 export const getFiles = (path: string) => {
   return axios.get('/share/files', {
     params: { path },
@@ -25,9 +29,7 @@ export const getFile = (pathname: string, fileName: string) => {
     },
   });
 };
-/**
- * get
- */
+
 export const getprofil = () => {
   return axios.get(`/user`);
 };

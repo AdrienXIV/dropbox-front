@@ -63,7 +63,7 @@ export default class ShowFile extends React.Component<P & WithStyles<Styles>, S>
   render() {
     const { classes, match } = this.props;
     const { severity, open, message, file, isCode, language } = this.state;
-    console.log(history);
+
     return (
       <div className={classes.root}>
         <Snackbar
