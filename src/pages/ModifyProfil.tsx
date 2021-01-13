@@ -7,6 +7,8 @@ import { getprofil } from '../utils/api';
 import { updateprofil } from '../utils/api';
 import history from '../history';
 import { setCookie } from '../utils/cookie';
+import { Link } from 'react-router-dom';
+import KeyboardBackspaceIcon from '@material-ui/icons/KeyboardBackspace';
 
 interface P {}
 interface S {
@@ -38,8 +40,7 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
   handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const { data } = await updateprofil(this.state);
-      history.push('/profil');
+      await updateprofil(this.state);
     } catch (error) {
       console.error(error);
     }
@@ -56,6 +57,9 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
 
     return (
       <div>
+        <Link to='/tableau-de-bord'>
+          <KeyboardBackspaceIcon style={{ color: 'blue', fontSize: 'xxx-large', margin: '1% 0 0 2.5%' }} />
+        </Link>
         <Container maxWidth='lg' className={classes.container}>
           <Card className={classes.root}>
             <CardContent className={classes.blockLeft}>
