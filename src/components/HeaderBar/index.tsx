@@ -29,9 +29,9 @@ export class HeaderBar extends React.Component<P & WithStyles<Styles>> {
       <div className={classes.grow}>
         <AppBar position='static'>
           <Toolbar>
-            <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='open drawer'>
+            {/* <IconButton edge='start' className={classes.menuButton} color='inherit' aria-label='open drawer'>
               <MenuIcon />
-            </IconButton>
+            </IconButton> */}
             <Typography className={classes.title} variant='h6' noWrap>
               <div className={classes.btnProfil}>
                 <Button startIcon={<AccountBoxIcon />} onClick={() => history.push('/profil')}>
