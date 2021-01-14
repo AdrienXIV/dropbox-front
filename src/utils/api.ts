@@ -7,6 +7,9 @@ axios.defaults.baseURL = URL_API;
 // ajout du token dans les requetes http
 axios.defaults.headers = {
   authorization: getCookie('token') ? `Baerer ${getCookie('token')}` : undefined,
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Methods': 'DELETE, POST, GET, PUT, PATCH, OPTION',
+  'Access-Control-Allow-Headers': 'Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With',
 };
 
 /**
