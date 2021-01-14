@@ -1,1 +1,1 @@
-export const URL_API = <string>'https://api-dropbox.ddns.net';
+export const URL_API = <string>'http://api-dropbox.ddns.net';
