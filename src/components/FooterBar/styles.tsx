@@ -1,4 +1,4 @@
-import { createStyles, Theme } from '@material-ui/core';
+import { createStyles } from '@material-ui/core';
 
 export type Styles =
   | 'footerBar'
@@ -14,7 +14,7 @@ export type Styles =
   | 'develop'
   | 'footerp';
 
-const styles = (theme: Theme) =>
+const styles = () =>
   createStyles({
     footerBar: {
       flex: 1,

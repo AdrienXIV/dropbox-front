@@ -10,7 +10,6 @@ import {
   withStyles,
   WithStyles,
   Snackbar,
-  ListItemText,
 } from '@material-ui/core';
 import VpnKeyIcon from '@material-ui/icons/VpnKey';
 import AlternateEmailIcon from '@material-ui/icons/AlternateEmail';
