@@ -76,3 +76,6 @@ export const saveCodeFile = (data: { code: string; language: string; path: strin
 /**
  * DELETE
  */
+export const removeProfile = () => {
+  return axios.delete('/user');
+};

@@ -193,7 +193,7 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     const { severity, open, message, anchorEl, files, dirs, path } = this.state;
 
     return (
-      <div className={classes.root}>
+      <div id='dashboard' className={classes.root}>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           autoHideDuration={severity === 'warning' ? undefined : 6000}

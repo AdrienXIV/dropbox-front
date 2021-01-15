@@ -63,7 +63,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
     if (getCookie('token')) return <Redirect to='/tableau-de-bord' />;
     const { severity, message, open } = this.state;
     return (
-      <Container maxWidth='lg' className={classes.container}>
+      <Container id='home' maxWidth='lg' className={classes.container}>
         <Snackbar
           anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
           autoHideDuration={6000}
@@ -78,7 +78,7 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
             <Typography component='h5' variant='h5' align='center'>
               Connexion
             </Typography>
-            <form onSubmit={this.handleSubmit} className={classes.form} noValidate autoComplete='off'>
+            <form id='login-form' onSubmit={this.handleSubmit} className={classes.form} noValidate autoComplete='off'>
               <div className={classes.margin}>
                 <Grid container spacing={1} alignItems='flex-end'>
                   <Grid item>
@@ -123,13 +123,17 @@ export default class Home extends React.Component<P & WithStyles<Styles>, S> {
           </CardContent>
 
           <CardContent className={classes.blockRight}>
-            <Typography component='h5' variant='h5' align='center'>
+            <Typography id='home-title' component='h5' variant='h5' align='center'>
               Dropbox | IMIE-Paris
             </Typography>
             <Typography variant='subtitle1' align='center'>
               Groupe 6
             </Typography>
-            <Button variant='contained' className={classes.buttonSignup} onClick={() => history.push('/inscription')}>
+            <Button
+              id='signup'
+              variant='contained'
+              className={classes.buttonSignup}
+              onClick={() => history.push('/inscription')}>
               S&apos;inscrire
             </Button>
           </CardContent>

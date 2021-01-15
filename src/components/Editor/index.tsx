@@ -16,12 +16,9 @@ import 'codemirror/mode/php/php';
 import 'codemirror/addon/lint/lint';
 import 'codemirror/addon/lint/json-lint';
 import { Controlled as ControlledEditor } from 'react-codemirror2';
-// import beautifier from '@unibeautify/beautifier-php-codesniffer';
 import beautify from 'beautify';
 import sqlFormatter from 'sql-formatter';
 import { saveCodeFile } from '../../utils/api';
-// import prettier from 'prettier/standalone';
-// import unibeautify from 'unibeautify';
 
 interface P {
   language: string;
@@ -85,7 +82,7 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
         this.setState({ code: beautify(this.state.code, { format: 'js' }), language: 'javascript' });
         break;
       case 'php':
-         this.setState({ code: beautify(this.state.code, { format: "css" }), language: 'php' });
+        this.setState({ code: beautify(this.state.code, { format: 'css' }), language: 'php' });
         //this.setState({ code: unibeautify.loadLanguage('php')});
         break;
       default:
