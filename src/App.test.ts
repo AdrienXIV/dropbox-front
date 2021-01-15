@@ -1,9 +1,9 @@
-import { setup, teardown } from 'jest-dev-server';
+// import { setup, teardown } from 'jest-dev-server';
 // global
 let browser: any;
 let page: any;
 //
-const faker = require('faker');
+// const faker = require('faker');
 const puppeteer = require('puppeteer');
 const HOST = 'http://localhost:3000';
 
@@ -100,3 +100,4 @@ describe("Page d'accueil", () => {
 //TODO: s'inscrire
 
 //TODO: voir le profil
+export {};
