@@ -44,7 +44,6 @@ export default class ModifyProfil extends React.Component<P & WithStyles<Styles>
     try {
       const { data } = await getprofil();
       this.setState({ ...data });
-      console.log('data: ', data);
     } catch (error) {
       console.log('error: ', error);
       // mauvais token donc retour à l'accueil pour se connecter

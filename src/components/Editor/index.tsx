@@ -39,7 +39,6 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   public state: Readonly<S> = { code: '', language: 'xml', open: false, severity: 'success', message: '' };
 
   componentDidMount() {
-    console.log(this.props);
     this.setState({ language: this.props.language, code: this.props.value });
 
     // formattage après la récupération
@@ -55,7 +54,6 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
   };
 
   beautify = () => {
-    console.log('beautify', this.state.language);
     switch (this.state.language) {
       case 'xml':
         this.setState({ code: beautify(this.state.code, { format: 'html' }), language: 'xml' });
@@ -90,7 +88,6 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
     }
   };
   saveCode = () => {
-    console.log(this.props.filename);
     const path = sessionStorage.getItem('pathname') ? (sessionStorage.getItem('pathname') as string) : '';
 
     saveCodeFile({
@@ -99,7 +96,6 @@ export default class Editor extends React.Component<P & WithStyles<Styles>, S> {
       path: `${path}/${this.props.filename}`,
     })
       .then(({ data }) => {
-        console.log(data);
         this.setState({ message: data.message, open: true, severity: 'success' });
       })
       .catch(error => {

@@ -46,7 +46,6 @@ export default class Register extends React.Component<P & WithStyles<Styles>, S>
     e.preventDefault();
     try {
       const { data } = await register(this.state);
-      console.log('data: ', data);
       setCookie('token', data.token, 1);
       // ajout du token dans les requetes http
       axios.defaults.headers = {

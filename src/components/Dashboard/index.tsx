@@ -44,7 +44,6 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
 
   componentDidMount() {
     this.getAllFilesWithCurrentPathname();
-    console.log(sessionStorage.getItem('pathname'));
   }
   componentDidUpdate() {
     const pathname = this.state.path.join('/') + '/';
@@ -132,7 +131,6 @@ export default class Profile extends React.Component<P & WithStyles<Styles>, S> 
     const errors: string[] = [];
     let folder = '';
     files.forEach((file: any) => {
-      console.log('file: ', file);
       if (checkExtension(file.name as string)) {
         // ajouter le chemin du répertoire où l'on se trouve
         formData.append('pathname', sessionStorage.getItem('pathname') as string | '/');
